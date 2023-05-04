@@ -26,9 +26,13 @@
     <select onchange="window.location.href = this.value">
         <option value="{{ route('products.index') }}" @unless($name)  selected @endunless>Toutes catégories</option>
         @foreach($categories as $categorie)
+            @if($categorie->status == 0)
             <option
                 value="{{ route('products.categorie', $categorie->name) }}" {{$name == $categorie->name ? 'selected' : '' }}>{{ $categorie->name }}
             </option>
+            @else
+                @continue
+            @endif
         @endforeach
     </select>
 </div>
@@ -78,6 +82,7 @@
     </tr>
     @foreach ($products as $product)
 
+        @if($product->categorie->status == 0)
         @if($product->status == 0)
         <tr>
             <td>{{ $product->id }}</td>
@@ -94,6 +99,9 @@
                         <input type="submit" value="Supprimer">
                     </form>
             </td>
+            @else
+                @continue
+            @endif
             @else
                 @continue
             @endif

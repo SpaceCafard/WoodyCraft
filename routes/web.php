@@ -118,6 +118,9 @@ Route::controller(CategorieController::class)->group(function () {
     Route::get('/admin/categorie/{id}/edit', 'editCat')->name('admin.editCat')->middleware('is_admin');
     Route::post('/admin/categorie/store','storeCat')->name('admin.storeCat')->middleware('is_admin');
     Route::post('/admin/categorie/{id}/update','updateCat')->name('admin.updateCat')->middleware('is_admin');
+    Route::post('/admin/categorie/{id}/destroy', 'destroyCat')->name('categorie.destroy')->middleware('is_admin');
+    Route::post('/admin/categorie/{id}/actived', 'reactivedCat')->name('categorie.actived')->middleware('is_admin');
+
 
 
 

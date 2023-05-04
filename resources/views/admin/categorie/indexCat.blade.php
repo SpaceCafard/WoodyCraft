@@ -47,19 +47,55 @@
         <th>Action</th>
     </tr>
     @foreach ($categories as $categorie)
-
+        @if($categorie->status == 0)
         <tr>
             <td>{{ $categorie->name }}</td>
             <td>{{ $categorie->description }}</td>
             <td>
                 <a href="{{ route('admin.showCat', $categorie->id) }}">Voir</a>
                 <a href="{{ route('admin.editCat', $categorie->id) }}">Modifier</a>
+                <form action="{{ route('categorie.destroy',$categorie->id )}}" method="post">
+                    @csrf
+                    <input type="submit" value="Supprimer">
+                </form>
             </td>
+            @else
+                @continue
+            @endif
 
         </tr>
-    @endforeach
-</table>
 
+    @endforeach
+</table><br><br>
+
+<p>Catégorie Archivé</p>
+
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Action</th>
+    </tr>
+    @foreach ($categories as $categorie)
+        @if($categorie->status == 1)
+            <tr>
+                <td>{{ $categorie->name }}</td>
+                <td>{{ $categorie->description }}</td>
+                <td>
+
+                    <form action="{{ route('categorie.actived',$categorie->id )}}" method="post">
+                        @csrf
+                        <input type="submit" value="Réactiver">
+                    </form>
+                </td>
+                @else
+                    @continue
+                @endif
+
+            </tr>
+
+            @endforeach
+</table>
 <!-- Fin Affichage des données -->
 
 

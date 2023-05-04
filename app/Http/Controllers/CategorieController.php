@@ -94,17 +94,21 @@ class CategorieController extends Controller
 
     public function destroyCat($id)
     {
-        $products= Product::all();
         $categories = Categorie::query()->findOrFail($id);
-        foreach($products as $product)
-        {
-            if($product->categorie_id==$id)
-            {
-                return back()->with('info', "Impossible car des produits sont toujours associé à cette organisation, Liquidé d'abord les membres de l'organisation pour en entreprendre le demantelement ");
-            }
-        }
-        $allegeances->delete();
+        $categories->status = 1;
+        $categories->update();
 
-        return back()->with('info', 'Allégeance neutralisé avec succès');
+        return back()->with('info','Catégorie archivé');
+
+    }
+    public function reactivedCat($id)
+    {
+
+        $categories = Categorie::query()->findOrFail($id);
+        $categories->status = 0;
+        $categories->update();
+
+        return back()->with('info','produit remis en ciruclation');
+
     }
 }

@@ -152,7 +152,7 @@ class IndexController extends Controller
         $products->status = 1;
         $products->update();
 
-        return back()->with('info','produit archivé');
+        return back()->with('info','produit archivé : ' . $products->nameP);
 
     }
 
