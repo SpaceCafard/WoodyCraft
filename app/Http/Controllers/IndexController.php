@@ -21,9 +21,14 @@ class IndexController extends Controller
         if(Auth::id()) {
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
-            return view('home', compact('user','count'));
+            $products = Product::inRandomOrder()->limit(3)->get();
+
+            return view('home', compact('user','count','products'));
         }
-        return view('home');
+        else{
+            $products = Product::inRandomOrder()->limit(3)->get();
+        return view('home', compact('products'));
+        }
     }
 
     public function index($name = null)

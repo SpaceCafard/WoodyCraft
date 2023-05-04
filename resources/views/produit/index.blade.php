@@ -68,6 +68,7 @@
         <th>Panier</th>
     </tr>
     @foreach ($products as $product)
+        @if($product->categorie->status == 0)
         @if($product->status == 0)
         <tr>
             <td>{{ $product->nameP }}</td>
@@ -90,6 +91,9 @@
                     </form>
                 @endif
             </td>
+            @else
+                @continue
+            @endif
             @else
                 @continue
             @endif

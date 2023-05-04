@@ -55,6 +55,50 @@
     <h1>Bienvenue {{$user->name}}</h1>
 @endguest
 
+<table>
+    <tr>
+        <th>Nom</th>
+        <th>Description</th>
+        <th>Prix</th>
+        <th>Categorie</th>
+        <th>Stock</th>
+        <th>Panier</th>
+    </tr>
+    @foreach ($products as $product)
+        @if($product->categorie->status == 0)
+        @if($product->status == 0)
+            <tr>
+                <td>{{ $product->nameP }}</td>
+                <td>{{ $product->description }}</td>
+                <td>{{ $product->price }}</td>
+                <td>{{ $product->categorie->name }}</td>
+                <td>{{ $product->stock }}</td>
+                <td>
+                    <a href="{{ route('products.show', $product->id) }}">Voir</a>
+                </td>
+                <td>
+                    @if( $product->stock <= 0 )
+                        Hors-Stock
+                    @else
+                        <form action="{{route('panier.ajout', $product->id)}}" method="POST">
+                            @csrf
+
+                            <input type="number" value="1" min="1" max="{{ $product->stock }}" name="quantity">
+                            <input type="submit" value="Ajouter au Panier">
+                        </form>
+                    @endif
+                </td>
+                @else
+                    @continue
+                @endif
+                @else
+                    @continue
+                @endif
+            </tr>
+            @endforeach
+</table>
+
+
 
 </body>
 </html>
