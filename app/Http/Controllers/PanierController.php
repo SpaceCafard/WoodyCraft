@@ -105,15 +105,17 @@ class PanierController extends Controller
 
             $paniers = Panier::where('name', $user->name)->get();
 
+            $ip = $_SERVER['SERVER_ADDR'];
+
             if($hs==true)
             {
                 $info="Certains porduit ont été supprimer de votre panier";
-                return view('panier.cart2', compact('count', 'paniers','info'));
+                return view('panier.cart2', compact('count', 'paniers','info','ip'));
             }
             else
             {
                 $info="";
-                return view('panier.cart2', compact('count', 'paniers','info'));
+                return view('panier.cart2', compact('count', 'paniers','info','ip'));
             }
         }
         else

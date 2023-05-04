@@ -31,7 +31,7 @@
     <p>Description : {{ $product->description }}</p>
     <p>Stock : {{ $product->stock }}</p>
     @if($product->image == null )
-        <p>Image : <img src="WoodyCraft/public/image/notAvailable.png"/></p>
+        <p>Image : <img src="http://{{ $ip }}/WoodyCraft/public/image/notAvailable.png"/></p>
     @else
         <p>Image : <img src="{{ URL::to($product->image) }}"/></p>
     @endif

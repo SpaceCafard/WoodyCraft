@@ -22,8 +22,8 @@ class IndexController extends Controller
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
             $products = Product::inRandomOrder()->limit(3)->get();
-
-            return view('home', compact('user','count','products'));
+            $ip = $_SERVER['SERVER_ADDR'];
+            return view('home', compact('user','count','products','ip'));
         }
         else{
             $products = Product::inRandomOrder()->limit(3)->get();
@@ -58,10 +58,11 @@ class IndexController extends Controller
         if(Auth::id()) {
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
-            return view('produit.show', compact('product','categories','count'));
+            $ip = $_SERVER['SERVER_ADDR'];
+            return view('produit.show', compact('product','categories','count','ip'));
         }
-
-        return view('produit.show', compact('product', 'categories'));
+        $ip = $_SERVER['SERVER_ADDR'];
+        return view('produit.show', compact('product', 'categories','ip'));
     }
 
 
@@ -108,8 +109,9 @@ class IndexController extends Controller
     public function edit($id)
     {
         $products = Product::query()->findOrFail($id);
+        $ip = $_SERVER['SERVER_ADDR'];
         $categories = Categorie::all();
-        return view('admin.edit', compact('categories','products'));
+        return view('admin.edit', compact('categories','products','ip'));
     }
 
 

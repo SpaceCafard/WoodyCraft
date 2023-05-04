@@ -19,7 +19,8 @@ class AdminController extends Controller
         if(Auth::id()) {
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
-            return view('admin.homeAdmin', compact('user','count'));
+            $ip = $_SERVER['SERVER_ADDR'];
+            return view('admin.homeAdmin', compact('user','count','ip'));
         }
         else
         {
@@ -32,7 +33,6 @@ class AdminController extends Controller
         if(Auth::id())
         {
             $customers= Customer::all();
-
 
             return view('admin.listUser', compact('customers'));
 
@@ -48,7 +48,8 @@ class AdminController extends Controller
             $user = auth()->user();
             $products = Product::all();
             $categories = Categorie::all();
-            return view('admin.archive', compact('user','products','categories'));
+            $ip = $_SERVER['SERVER_ADDR'];
+            return view('admin.archive', compact('user','products','categories','ip'));
         }
         else
         {

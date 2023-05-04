@@ -55,6 +55,9 @@
     <h1>Bienvenue {{$user->name}}</h1>
 @endguest
 
+
+
+
 <table>
     <tr>
         <th>Nom</th>
