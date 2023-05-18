@@ -100,6 +100,7 @@ class IndexController extends Controller
         if($request->has('image')){
             $products->image = ("/image/".$imageName);
         }
+        $products->status=0;
 
 
         $products->save();

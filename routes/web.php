@@ -92,7 +92,7 @@ Route::controller(OrderController::class)->group(function () {
 Route::controller(AdminController::class)->group(function () {
 
     Route::get('/admin', 'homeAdmin')->name('admin.home')->middleware('is_admin');
-    Route::get('/admin/listUser', 'showUser')->name('admin.userList')->middleware('is_admin');
+    Route::get('/admin/listUser', 'indexUser')->name('admin.userList')->middleware('is_admin');
     Route::get('/admin/product/archive', 'archiveIndex')->name('admin.archive')->middleware('is_admin');
 
 

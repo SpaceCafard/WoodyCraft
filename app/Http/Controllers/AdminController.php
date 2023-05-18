@@ -28,11 +28,11 @@ class AdminController extends Controller
         }
     }
 
-    public function showUser()
+    public function indexUser()
     {
         if(Auth::id())
         {
-            $customers= Customer::all();
+            $customers= Customer::all()->oldest('nameP');
 
             return view('admin.listUser', compact('customers'));
 

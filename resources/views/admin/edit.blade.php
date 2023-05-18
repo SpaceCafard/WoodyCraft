@@ -21,7 +21,7 @@
                 @if($categorie->id==$products->categorie_id)
                     @continue
                 @endif
-                <option value="{{ $categorie->id }}">{{ $categorie->slug }}</option>
+                <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
             @endforeach
         </select>
 
