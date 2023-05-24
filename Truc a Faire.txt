@@ -2,8 +2,8 @@ Tous les utilisateur V
 Management categorie V
 Modification MDP V
 Layout ?
-error des form 
+error des form
 top Produit V
-Page Register Admin Auto destruction
-Maj des produits paniers ?
-produit archivé et pour les catégorie ?
+Page Register Admin Auto destruction V
+Maj des produits paniers V
+produit archivé et pour les catégorie V
