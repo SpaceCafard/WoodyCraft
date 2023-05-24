@@ -8,8 +8,11 @@ use App\Models\Order;
 use App\Models\Panier;
 use App\Models\Product;
 use App\Models\User;
+use Cassandra\Custom;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Validation\UnauthorizedException;
+use Hash;
 
 class AdminController extends Controller
 {
@@ -32,10 +35,22 @@ class AdminController extends Controller
     {
         if(Auth::id())
         {
-            $customers= Customer::all()->oldest('nameP');
+            $customers= Customer::all();
 
             return view('admin.listUser', compact('customers'));
 
+        }
+        else{
+            return redirect('login');
+        }
+    }
+
+    public function showUser($id)
+    {
+        if(Auth::id())
+        {
+            $customers = Customer::query()->findOrFail($id);
+            return view('admin.showUser', compact('customers'));
         }
         else{
             return redirect('login');
@@ -55,6 +70,38 @@ class AdminController extends Controller
         {
             return redirect('login')->with('info','Il faut vous connecter pour acceder a cette fonctionalité');
         }
+    }
+
+    public function registerAdmin()
+    {
+        return view('admin.registerAdmin');
+    }
+
+    public function storeRegAdmin(Request $request)
+    {
+        $request->validate([
+
+            'email' => 'required|email|unique:users',
+            'name' => 'required',
+            'password' => 'required|min:12',
+
+        ]);
+
+        $hashMdp = Hash::make($request['password']);
+        $users = new user([
+            'email' => $request->get('email'),
+            'name' => $request->get('name'),
+            'password' => $hashMdp,
+        ]);
+
+        $users->is_admin = 1;
+
+        $pathFile = resource_path('views\admin\registerAdmin.blade.php');
+        unlink($pathFile);
+        $users->save();
+
+
+        return redirect('/')->with('info', "Inscrit en temps qu'admin avec succès");
     }
 
 

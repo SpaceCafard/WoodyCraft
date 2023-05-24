@@ -52,7 +52,6 @@
             <td>{{ $categorie->name }}</td>
             <td>{{ $categorie->description }}</td>
             <td>
-                <a href="{{ route('admin.showCat', $categorie->id) }}">Voir</a>
                 <a href="{{ route('admin.editCat', $categorie->id) }}">Modifier</a>
                 <form action="{{ route('categorie.destroy',$categorie->id )}}" method="post">
                     @csrf

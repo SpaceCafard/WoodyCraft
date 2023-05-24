@@ -1,0 +1,245 @@
+*{
+  margin: 0px;
+  padding: 0px;
+  font-family: 'Kanit', sans-serif;
+  text-decoration:none;
+ 
+}
+
+nav{
+  width: 100%;
+  margin: 0 auto;
+  background-color: black;
+  position: sticky;
+  top: 0px;
+}
+
+nav ul{
+  list-style-type: none;
+}
+
+nav ul li{
+  float: left;
+  width: 33.3%;
+  text-align: center;
+  position: relative;
+}
+
+nav ul::after{
+  content: "";
+  display: table;
+  clear: both;
+}
+
+nav a{
+  display: block;
+  text-decoration: none;
+  color: white;
+  border-bottom: 2px solid transparent;
+  padding: 10px 0px;
+}
+
+nav a:hover{
+  color: orange;
+  border-bottom: 2px solid gold;
+}
+
+.sous{
+  display: none;
+  box-shadow: 0px 1px 2px #CCC;
+  background-color: black;
+  position: absolute;
+  width: 100%;
+  z-index: 1000;
+}
+nav > ul li:hover .sous{
+  display: block;
+}
+.sous li{
+  float: none;
+  width: 100%;
+  text-align: left;
+}
+.sous a{
+  padding: 10px;
+  border-bottom: none;
+}
+.sous a:hover{
+  border-bottom: none;
+  background-color: RGBa(200,200,200,0.1);
+}
+.deroulant > a::after{
+  content:" ▼";
+  font-size: 12px;
+}
+
+
+
+
+
+
+
+/* Fin du code de la navbar */
+/* ///////////////////////////////////////////////// */
+
+
+
+
+
+/* ///////////////////////////////////////////////// */
+/* code des produits a la une page d'accueil */
+
+
+  /* Fin code des produits a la une page d'accueil */
+  /* ///////////////////////////////////////////////// */
+
+
+   /* ///////////////////////////////////////////////// */
+  /* Code du bouton DECOUVEREZ NOS ARTICLES */
+
+  button {
+    padding: 0.8em 1.8em;
+    margin-left: 150px;
+    border: 2px solid #17C3B2;
+    position: relative;
+    overflow: hidden;
+    background-color: transparent;
+    text-align: center;
+    text-transform: uppercase;
+    font-size: 16px;
+    transition: .3s;
+    z-index: 1;
+    font-family: inherit;
+    color: #17C3B2;
+    
+    
+   }
+   
+   button::before {
+    content: '';
+    width: 0;
+    height: 300%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) rotate(45deg);
+    background: #17C3B2;
+    transition: .5s ease;
+    display: block;
+    z-index: -1;
+   }
+   
+   button:hover::before {
+    width: 105%;
+   }
+   
+   button:hover {
+    color: #111;
+   }
+   
+
+   .input {
+    height: 40px;
+    line-height: 28px;
+    padding: 0 1rem;
+    width: 100%;
+    padding-left: 2.5rem;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    outline: none;
+    background-color: #D9E8D8;
+    color: #0d0c22;
+    box-shadow: 0 0 5px #C1D9BF, 0 0 0 10px #f5f5f5eb;
+    transition: .3s ease;
+  }
+  
+  .input::placeholder {
+    color: #777;
+  }
+  
+  * {box-sizing: border-box;}
+  
+  p {
+    margin: 0 0 1em 0;
+  }
+
+  h1{
+    margin-left: 150px;
+    margin-top: 50px;
+  }
+  
+  
+  
+  .item {
+    margin: 150px;
+    min-height:350px ;
+    min-width: 300px;
+    display: inline-block;
+    vertical-align: middle;
+    border-radius: 0.5rem;
+    background-color: #fff;
+    box-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+    border: 2px solid transparent;
+    border-color: #d5d5d5;
+    }
+  
+    .content {
+      padding: 1.1rem;
+    }
+    
+    .image {
+      object-fit: cover;
+      width: 100%;
+      height: 150px;
+      background-color: rgb(239, 205, 255);
+    }
+    
+    .title {
+      color: #111827;
+      font-size: 1.125rem;
+      line-height: 1.75rem;
+      font-weight: 600;
+    }
+    
+    .desc {
+      margin-top: 0.5rem;
+      color: #6B7280;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+    }
+    
+    .action {
+      display: inline-flex;
+      margin-top: 1rem;
+      color: #ffffff;
+      font-size: 0.875rem;
+      line-height: 1.25rem;
+      font-weight: 500;
+      align-items: center;
+      gap: 0.25rem;
+      background-color: #2563EB;
+      padding: 4px 8px;
+      border-radius: 4px;
+    }
+    
+    .action span {
+      transition: .3s ease;
+    }
+    
+    .action:hover span {
+      transform: translateX(4px);
+    }
+    
+  
+
+    
+    @media (max-width : 767px){
+      .navbar {
+        flex-direction: column;
+        height: 100x;
+        width: 750px;
+      }
+      body{
+        height: 400px;
+      }
+      }

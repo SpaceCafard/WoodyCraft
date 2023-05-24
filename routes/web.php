@@ -92,7 +92,11 @@ Route::controller(OrderController::class)->group(function () {
 Route::controller(AdminController::class)->group(function () {
 
     Route::get('/admin', 'homeAdmin')->name('admin.home')->middleware('is_admin');
+    Route::get('/admin/register', 'registerAdmin')->name('admin.register');
+    Route::post('/admin/store', 'storeRegAdmin')->name('admin.storeReg');
+
     Route::get('/admin/listUser', 'indexUser')->name('admin.userList')->middleware('is_admin');
+    Route::get('/admin/showUser/{id}', 'showUser')->name('admin.userShow')->middleware('is_admin');
     Route::get('/admin/product/archive', 'archiveIndex')->name('admin.archive')->middleware('is_admin');
 
 

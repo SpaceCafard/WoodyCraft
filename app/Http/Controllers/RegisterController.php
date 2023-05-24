@@ -18,7 +18,7 @@ class RegisterController extends Controller
     public function storeReg(Request $request)
     {
         $request->validate([
-            $forname = 'forname' => 'required' ,
+            'forname' => 'required' ,
             'surname' => 'required',
             'add1' => 'required',
             'add2',
