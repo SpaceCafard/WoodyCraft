@@ -29,7 +29,7 @@ Route::get('/login', function (){
 Route::resource('products', IndexController::class);
 Route::controller(IndexController::class)->group(function () {
 
-    Route::get('/', 'home');
+    Route::get('/', 'home')->name('home');
     Route::get('/products', 'index')->name('products.index');
     Route::get('categorie/{name}/products', 'index')->name('products.categorie');
     Route::get('/product/{id}', 'show')->name('show');

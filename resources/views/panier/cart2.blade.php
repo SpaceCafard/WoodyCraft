@@ -39,16 +39,16 @@
 <!-- Fin Connexion/Inscription -->
 
 <!-- Données -->
-    <table>
-        <tr>
-            <td>Nom Produit</td>
-            <td>Quantité</td>
-            <td>Prix</td>
-            <td>Action</td>
-        </tr>
+<table>
+    <tr>
+        <td>Nom Produit</td>
+        <td>Quantité</td>
+        <td>Prix</td>
+        <td>Action</td>
+    </tr>
 
-        <span hidden>{{$total = 0}}</span>
-        @foreach($paniers as $panier)
+    <span hidden>{{$total = 0}}</span>
+    @foreach($paniers as $panier)
         <tr>
             <td>{{$panier->product->nameP}}</td>
             <td>
@@ -68,16 +68,16 @@
                 </form>
             </td>
         </tr>
-            <span hidden>{{ $total = $total+$totalProd }}</span>
-        @endforeach
-    </table>
-    <p>Total : {{$total}}€</p>
-    <form action="{{route('panier.remove')}}" method="POST">
-        @csrf
-        @method('DELETE')
-        <input type="submit" value="Supprimer le Panier">
-    </form>
-    <input type="hidden" name="total" value="{{ $total }}">
+        <span hidden>{{ $total = $total+$totalProd }}</span>
+    @endforeach
+</table>
+<p>Total : {{$total}}€</p>
+<form action="{{route('panier.remove')}}" method="POST">
+    @csrf
+    @method('DELETE')
+    <input type="submit" value="Supprimer le Panier">
+</form>
+<input type="hidden" name="total" value="{{ $total }}">
 <!-- Fin Données -->
 
 <a href="{{ route('order.user') }}">Commander</a>
