@@ -1,136 +1,106 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Page Accueil</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css">
-
-    <link rel="stylesheet" href="Ressources/CSS/accueil.css">
-    <style>
-   
-  </style>
+    <title>Ma Boutique de Jouets</title>
+    <!-- Liens vers les fichiers CSS -->
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <meta charset="UTF-8">
 </head>
 <body>
+    <header>
+        <!-- En-tête du site -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Ma Boutique de Jouets</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Produits</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Connexion
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Sous-menu 1</a>
+                            <a class="dropdown-item" href="#">Sous-menu 2</a>
+                            <a class="dropdown-item" href="#">Sous-menu 3</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="fa fa-shopping-cart"></span> Panier
+                        </a>
+                    </li>
+                </ul>
+            
+            </div>
+        </nav>
+    </header>
+    
+    
+    
+    
 
-   <!--AFFICHAGE DE LA BARRE DE NAVIGATION-->
+   <div class="container">
+    <!-- Contenu principal du site -->
+    <h1>Bienvenue dans notre Boutique de Jouets !</h1>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
-        <a class="navbar-brand" href="index.html">WoodyCraft</a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav mr-auto">
-                <li class="nav-item">
-                    <a class="nav-link" href="index.html">Accueil</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="#">Articles</a>
-                </li>
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                        Profil
-                    </a>
-                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                        <a class="dropdown-item" href="#">Se connecter</a>
-                        <a class="dropdown-item" href="#">Créer un compte</a>
-                        <a class="dropdown-item" href="#">Voir mon Panier</a>
-                    </div>
-                </li>
-            </ul>
-        </div>
-    </nav>
-
-    <!--AFFICHAGE DES 3 CARTES D'ARTICLES-->
-    <main>
-    <div class="container">
-      <div class="row">
+    <div class="row">
         <div class="col-md-4">
             <div class="card">
-                <div class="image"></div>
-                 <div class="content">
-                   <a href="#">
-                     <span class="title">
-                       Titre Article
-                     </span>
-                   </a>
-               
-                   <p class="desc">
-                    Petite Description
-                   </p>
-               
-                   <a href="#" class="action">
-                     Consulter L'article
-                     <span aria-hidden="true">
-                       →
-                     </span>
-                   </a>
-                 </div>
-               </div>
+                <img src="chemin-vers-image1.jpg" class="card-img-top" alt="Nom de l'article 1">
+                <div class="card-body">
+                    <h5 class="card-title">Nom de l'article 1</h5>
+                    <p class="card-text">Description de l'article 1.</p>
+                    <a href="#" class="btn btn-primary">Acheter</a>
+                </div>
+            </div>
         </div>
+
         <div class="col-md-4">
             <div class="card">
-                <div class="image"></div>
-                 <div class="content">
-                   <a href="#">
-                     <span class="title">
-                      Titre Article
-                     </span>
-                   </a>
-               
-                   <p class="desc">
-                    Petite Description
-                   </p>
-               
-                   <a href="#" class="action">
-                    Consulter L'article
-                     <span aria-hidden="true">
-                       →
-                     </span>
-                   </a>
-                 </div>
-               </div>
+                <img src="chemin-vers-image2.jpg" class="card-img-top" alt="Nom de l'article 2">
+                <div class="card-body">
+                    <h5 class="card-title">Nom de l'article 2</h5>
+                    <p class="card-text">Description de l'article 2.</p>
+                    <a href="#" class="btn btn-primary">Acheter</a>
+                </div>
+            </div>
         </div>
+
         <div class="col-md-4">
             <div class="card">
-                <div class="image"></div>
-                 <div class="content">
-                   <a href="#">
-                     <span class="title">
-                      Titre Article
-                     </span>
-                   </a>
-               
-                   <p class="desc">
-                     Petite Description
-                   </p>
-               
-                   <a href="#" class="action">
-                    Consulter L'article
-                     <span aria-hidden="true">
-                       →
-                     </span>
-                   </a>
-                 </div>
-               </div>
+                <img src="chemin-vers-image3.jpg" class="card-img-top" alt="Nom de l'article 3">
+                <div class="card-body">
+                    <h5 class="card-title">Nom de l'article 3</h5>
+                    <p class="card-text">Description de l'article 3.</p>
+                    <a href="#" class="btn btn-primary">Acheter</a>
+                </div>
+            </div>
         </div>
-      </div>
-      <button class="button">
-        <span><a href="" style="color: white;">Voir d'autres articles</a> </span>
-        <svg aria-hidden="true" preserveAspectRatio="none" viewBox="-5 -5 110 110">
-          <path d="M0,0 C0,0 100,0 100,0 C100,0 100,100 100,100 C100,100 0,100 0,100 C0,100 0,0 0,0"></path>
-        </svg>
-      </button>
     </div>
-  </main>
+</div>
 
 
-  
-    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <footer>
+        <!-- Pied de page du site -->
+        <div class="container">
+            <p>&copy; 2023 Ma Boutique de Jouets. Tous droits réservés.</p>
+        </div>
+    </footer>
 
+    <!-- Liens vers les fichiers JavaScript de Bootstrap -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
