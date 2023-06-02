@@ -1,110 +1,125 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Woody</title>
+    <title>WoodyCraft</title>
+    <!-- Liens vers les fichiers CSS -->
+    <link rel="stylesheet" href="{{ URL::asset('styles.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="body">
-<h1>Les Enfants Terribles</h1>
+<body>
+<header>
+    <!-- En-tête du site -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ route('home') }}">WoodyCraft</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('products.index') }}">Produits</a>
+                </li>
+                @guest
 
-<!-- Message Pop Up -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            Connexion
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('Senregistrer') }}">
+                            S'inscrire
+                        </a>
+                    </li>
 
-@if(session()->has('info'))
-    <div>
-        {{ session('info') }}
+                @else
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Profil
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('order.list') }}">Mes Commandes</a>
+                            <a class="dropdown-item" href="{{ route('user.profil') }}">Mon Profil</a>
+                            <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Modifer le Profil</a>
+                            <a class="dropdown-item" href="{{ route('user.identifiant', $user->id) }}">Modifier le Mot de Passe</a>
+                            <a class="dropdown-item" href="{{ route('signout') }}">Se deconnecter</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('panier.liste') }}">
+                            <span class="fa fa-shopping-cart"></span> Panier[{{$count}}]
+                        </a>
+                    </li>
+
+                @endguest
+
+
+            </ul>
+
+        </div>
+    </nav>
+</header>
+
+
+<div class="container">
+    <h1>Touvez votre bonheur parmis nos articles.</h1>
+
+    <div class="select">
+        <select onchange="window.location.href = this.value">
+            <option value="{{ route('products.index') }}" @unless($name)  selected @endunless>Toutes catégories</option>
+            @foreach($categories as $categorie)
+                <option
+                    value="{{ route('products.categorie', $categorie->name) }}" {{$name == $categorie->name ? 'selected' : '' }}>{{ $categorie->name }}
+                </option>
+            @endforeach
+        </select>
     </div>
-@endif
+    <div class="row">
+        @foreach ($products as $product)
+            @if($product->categorie->status == 0)
+                @if($product->status == 0)
+                    <div class="col-md-4">
+                        <div class="card">
+                            @if($product->image == null )
+                                <img src="{{ URL::to('image/notAvailable.png') }}" class="card-img-top" alt="{{ $product->nameP }}">
+                            @else
+                                <img src="{{ URL::to($product->image) }}" class="card-img-top" alt="{{ $product->nameP }}">
+                            @endif
 
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $product->nameP }}</h5>
+                                <p class="card-text">{{ $product->description }}</p>
+                                @if( $product->stock <= 0 )
+                                    Hors-Stock
+                                @else
+                                    <form action="{{route('panier.ajout', $product->id)}}" method="POST">
+                                        @csrf
 
-
-<!-- Fin Message Pop Up -->
-
-<!-- Choix de la catégorie -->
-
-<div class="select">
-    <select onchange="window.location.href = this.value">
-        <option value="{{ route('products.index') }}" @unless($name)  selected @endunless>Toutes catégories</option>
-        @foreach($categories as $categorie)
-            <option
-                value="{{ route('products.categorie', $categorie->name) }}" {{$name == $categorie->name ? 'selected' : '' }}>{{ $categorie->name }}
-            </option>
+                                        <input type="number" value="1" min="1" max="{{ $product->stock }}" name="quantity">
+                                        <input type="submit" class="btn btn-primary" value="Ajouter au Panier">
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+                @endif
+            @endif
         @endforeach
-    </select>
+    </div>
 </div>
 
-<!-- Fin Choix de la catégorie -->
-
-<!-- Connexion/Inscription -->
-
-@guest
-
-        <a class="nav-link" href="{{ route('login') }}">Login</a>
-        <a class="nav-link" href="{{ route('Senregistrer') }}">Register</a>
 
 
-
-@else
-
-        <a class="nav-link" href="{{ route('signout') }}">Logout</a>
-        <a href="{{ route('user.profil') }}">Profile</a>
-        <a href="{{ route('panier.liste') }}">Panier User[{{$count}}]</a>
-        <a href="{{ route('order.list') }}">Mes Commandes</a>
-
-
-@endguest
-<!-- Fin Connexion/Inscription -->
-
-
-<!-- Affichage des données -->
-
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Prix</th>
-        <th>Categorie</th>
-        <th>Stock</th>
-        <th>Action</th>
-        <th>Panier</th>
-    </tr>
-    @foreach ($products as $product)
-        @if($product->categorie->status == 0)
-        @if($product->status == 0)
-        <tr>
-            <td>{{ $product->nameP }}</td>
-            <td>{{ $product->description }}</td>
-            <td>{{ $product->price }}</td>
-            <td>{{ $product->categorie->name }}</td>
-            <td>{{ $product->stock }}</td>
-            <td>
-                <a href="{{ route('products.show', $product->id) }}">Voir</a>
-            </td>
-            <td>
-                @if( $product->stock <= 0 )
-                    Hors-Stock
-                @else
-                    <form action="{{route('panier.ajout', $product->id)}}" method="POST">
-                        @csrf
-
-                        <input type="number" value="1" min="1" max="{{ $product->stock }}" name="quantity">
-                        <input type="submit" value="Ajouter au Panier">
-                    </form>
-                @endif
-            </td>
-            @else
-                @continue
-            @endif
-            @else
-                @continue
-            @endif
-        </tr>
-    @endforeach
-</table>
-
-<!-- Fin Affichage des données -->
-
-
+<!-- Liens vers les fichiers JavaScript de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-

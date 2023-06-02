@@ -3,7 +3,7 @@
 <head>
     <title>WoodyCraft</title>
     <!-- Liens vers les fichiers CSS -->
-    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="{{ URL::asset('styles.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -102,12 +102,7 @@
     @endforeach
     </div>
 </div>
-                <footer>
-                        <!-- Pied de page du site -->
-                        <div class="container">
-                            <p>&copy; 2023 WoodyCraft. Tous droits réservés.</p>
-                        </div>
-                    </footer>
+
 
                     <!-- Liens vers les fichiers JavaScript de Bootstrap -->
                     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

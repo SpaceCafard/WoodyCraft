@@ -43,7 +43,7 @@ class IndexController extends Controller
             }
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
-            return view('produit.index', compact('products','name','categories','count'));
+            return view('produit.index', compact('products','name','categories','count','user'));
         }
         return view('produit.index', compact('products','name','categories'));
 
