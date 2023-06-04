@@ -42,7 +42,7 @@
                 @else
 
                     <li class="nav-item dropdown active">
-                        <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{$user->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -77,11 +77,15 @@
 </header>
 
 <div class="container">
+    <h1>Commande en cours</h1>
     @foreach($orders as $order)
+        @if($order->status != 3)
         <div class="card">
-            <center></center>
-            <h1>Détail de la commande du {{ $order->created_at }}</h1>
+            <br>
+            <center>
 
+                <h5 class="card-title">Détail de la commande du {{ $order->created_at }}</h5>
+            </center>
             <div class="row">
                 <div class="col-md-6">
                     <div class="card-body">
@@ -90,7 +94,7 @@
                         </center>
                         @foreach($order->commandes as $commande)
                             <p class="card-text">
-                                {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}<br>
+                                {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}€<br>
                                 @endforeach
                                 <br>
                                 <strong>Total</strong> : {{$order->total}}€
@@ -118,10 +122,68 @@
                         </p>
                     </div>
                 </div>
-
             </div>
         </div>
+        @else
+            @continue
+        @endif
+    @endforeach
+
+    <h1>Historique des commandes</h1>
+    @foreach($orders as $order)
+        @if($order->status == 3)
+            <div class="card">
+                <br>
+                <center>
+
+                    <h5 class="card-title">Détail de la commande du {{ $order->created_at }}</h5>
+                </center>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">Produit</h5>
+                            </center>
+                            @foreach($order->commandes as $commande)
+                                <p class="card-text">
+                                    {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}€<br>
+                                    @endforeach
+                                    <br>
+                                    <strong>Total</strong> : {{$order->total}}€
+                                </p>
+                        </div>
+                    </div>
+
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">Adresse de livraison</h5>
+                            </center>
+                            <p class="card-text">
+                                Nom : {{$order->delivery->lastname}}<br>
+                                Prénom : {{$order->delivery->firstname}}<br>
+                                Adresse 1 : {{$order->delivery->add1}}<br>
+                                @if($order->delivery->add2 != null)
+                                    Adresse 2 : {{$order->delivery->add2}}<br>
+                                @endif
+                                Ville : {{$order->delivery->city}}<br>
+                                Code Postal : {{$order->delivery->postcode}}<br>
+                                Téléphone : {{$order->delivery->phone}}<br>
+                                Email : {{$order->delivery->email}}<br><br>
+                                État de la commande : @if($order->status == 0) Commandé @elseif($order->status == 1) En cours de Préparation @elseif($order->status == 2) Expédié @elseif($order->status == 3) Livrée @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            @continue
+        @endif
     @endforeach
 </div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>

@@ -133,7 +133,7 @@ class OrderController extends Controller
         {
             $user=auth()->user();
             $count = Panier::where('name', $user->name)->count();
-            $orders = Order::where('customer_id', $user->customer_id)->get();
+            $orders = Order::where('customer_id', $user->customer_id)->oldest('status')->get();
 
 
             return view('panier.listOrder', compact('orders','count','user'));

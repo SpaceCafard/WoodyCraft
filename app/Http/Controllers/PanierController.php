@@ -110,12 +110,12 @@ class PanierController extends Controller
             if($hs==true)
             {
                 $info="Certains porduit ont été supprimer de votre panier";
-                return view('panier.cart2', compact('count', 'paniers','info','ip'));
+                return view('panier.cart2', compact('count', 'paniers','info','ip','user'));
             }
             else
             {
                 $info="";
-                return view('panier.cart2', compact('count', 'paniers','info','ip'));
+                return view('panier.cart2', compact('count', 'paniers','info','ip','user'));
             }
         }
         else
@@ -135,7 +135,7 @@ class PanierController extends Controller
 
         $paniers->update();
 
-        return redirect('/showPanier');
+        return redirect('/showPanier')->with('info', 'Votre commande a été mis à jour');
     }
 
     public function destroyPanier()
@@ -143,14 +143,14 @@ class PanierController extends Controller
         $user = auth()->user();
         $paniers=Panier::where('name',$user->name);
         $paniers->delete();
-        return redirect('/showPanier');
+        return redirect('/showPanier')->with('info', 'Votre panier a été vidé');
     }
 
     public function destroyPanierProduct($id)
     {
         $paniers = Panier::query()->findOrFail($id);
         $paniers->delete();
-        return redirect('/showPanier')->with('info', 'Commande Mis à jour');
+        return redirect('/showPanier')->with('info', 'Produit supprimé');
     }
 
 }

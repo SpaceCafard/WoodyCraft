@@ -41,7 +41,7 @@
 
                 @else
 
-                    <li class="nav-item dropdown active">
+                    <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{$user->name}}
                         </a>
@@ -53,7 +53,7 @@
                             <a class="dropdown-item" href="{{ route('signout') }}">Se deconnecter</a>
                         </div>
                     </li>
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="{{ route('panier.liste') }}">
                             <span class="fa fa-shopping-cart"></span> Panier[{{$count}}]
                         </a>
@@ -74,54 +74,85 @@
     @endif
 
 
-</header>
-
+</header>>
   <div class="container">
-    @foreach($orders as $order) 
-    <div class="card">
-      <center></center>
-    <h1>Détail de la commande du {{ $order->created_at }}</h1>
-
+    <h1>Votre Panier</h1>
     <div class="row">
-      <div class="col-md-6">
-              <div class="card-body">
-                <center>
-                  <h5 class="card-title">Produit</h5>
-                </center>
-                @foreach($order->commandes as $commande)
-                  <p class="card-text">
-                    {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}<br>  
-                @endforeach 
-                <br>  
-                    <strong>Total</strong> : {{$order->total}}€
-                  </p>
-              </div>    
+    <div class="col-md-9">
+      <span hidden>
+        {{$total = 0}}
+        {{$nbProd = 0}}
+    </span>
+    @foreach($paniers as $panier)  
+    <div class="row">
+        
+            <div class="card">
+              <div class="row">
+              <div class="col-md-3">
+                @if($product->image == null )
+                                <img src="{{ URL::to('image/notAvailable.png') }}" class="card-img-top" alt="{{ $product->nameP }}">
+                            @else
+                                <img src="{{ URL::to($product->image) }}" class="card-img-top" alt="{{ $product->nameP }}">
+                            @endif
+              </div>
+              <div class="col-md-9">
+                <div class="card-body">
+                    <h5 class="card-title">{{$panier->product->nameP}}</h5>
+                    <p class="card-text">
+                      {{ $product->description }}<br>
+                      Prix : {{$totalProd = $panier->product->price * $panier->quantity}}€<br>
+                      Quantité: 
+                      <form action="{{ route('panier.update', $panier->id) }}" method="POST">
+                        @csrf
+                        <input type="hidden" name="id" value="{{ $panier->id }}">
+                        <input type="number" name="quantity" value="{{ $panier->quantity }}"/>
+                        <input type="submit" class="btn btn-primary" value="Mettre à jour">
+                    </form>
+                    <form action="{{ route('panierProd.remove',$panier->id )}}" method="post">
+                      @csrf
+                      @method('DELETE')
+                      <input type="submit" class="btn btn-danger" value="Supprimer">
+                  </form> 
+                    </p>
+    
+                </div>
+              </div>
+              </div>
+            </div>
+        </div>
+        <span hidden>
+          {{ $total = $total+$totalProd }}
+          {{ $nbProd = $nbProd+1 }}
+      </span>
+      @endforeach  
       </div>
 
-      <div class="col-md-6">
-        <div class="card-body">
-          <center>
-            <h5 class="card-title">Adresse de livraison</h5>
-          </center>
-            <p class="card-text">
-                    Nom : {{$order->delivery->lastname}}<br>
-                    Prénom : {{$order->delivery->firstname}}<br>
-                    Adresse 1 : {{$order->delivery->add1}}<br>
-                    @if($customers->add2 != null)
-                    Adresse 2 : {{$order->delivery->add2}}<br>
-                    @endif
-                    Ville : {{$order->delivery->city}}<br>
-                    Code Postal : {{$order->delivery->postcode}}<br>
-                    Téléphone : {{$order->delivery->phone}}<br>
-                    Email : {{$order->delivery->email}}<br><br>
-                    État de la commande : @if($order->status == 0) Commandé @elseif($order->status == 1) En cours de Préparation @elseif($order->status == 2) Expédié @elseif($order->status == 3) Livrée @endif
-                    </p>
-        </div>
-    </div>
+    
 
-  </div>
-</div>
-@endforeach
+    <div class="col-md-3">
+      <div class="row">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">Détail du panier</h5>
+                    <p class="card-text">
+                      Nombre de produit : {{ $nbProd }}<br>
+                      Total : {{ $total }}<br><br>
+                    </p>
+                    <a href="{{ route('order.user') }}" class="btn btn-success">Passer commande</a>
+                    <form action="{{route('panier.remove')}}" method="POST">
+                      @csrf
+                      @method('DELETE')
+                      <input type="submit" class="btn btn-danger" value="Supprimer le Panier">
+                  </form>
+                </div>
+            </div>
+        </div>
+      </div>
+
+        
+
+        
+    </div>
   </div>
 </body>
 </html>
