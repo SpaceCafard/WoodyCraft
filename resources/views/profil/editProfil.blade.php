@@ -84,7 +84,7 @@
     <center>
         <form action="{{ route('user.update', $customers->id) }}" method="POST" class="form">
             @csrf
-            <span class="signup">Creer un compte</span>
+            <span class="signup">Modifier son Profil</span>
             @if ($errors->has('surname'))
                 <span class="text-danger">{{ $errors->first('surname') }}</span>
             @endif
@@ -125,8 +125,6 @@
         </form>
     </center>
 </div>
-
-
 
 <!-- Liens vers les fichiers JavaScript de Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>

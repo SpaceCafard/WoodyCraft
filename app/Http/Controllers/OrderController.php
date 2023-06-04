@@ -26,7 +26,7 @@ class OrderController extends Controller
             {
 
                 $payments = Payment::all();
-                return view('panier.order', compact('payments','paniers'));
+                return view('panier.order', compact('payments','paniers','user'));
             }
             else{
                 return redirect('/showPanier')->with('info', 'Votre panier est vide');
@@ -136,7 +136,7 @@ class OrderController extends Controller
             $orders = Order::where('customer_id', $user->customer_id)->get();
 
 
-            return view('panier.listOrder', compact('orders','count'));
+            return view('panier.listOrder', compact('orders','count','user'));
 
         }
         else{
