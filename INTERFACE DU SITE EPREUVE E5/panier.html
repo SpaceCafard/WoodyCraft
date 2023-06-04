@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="panier.css">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+  <title>Panier</title>
+  <style>
+    .product {
+      display: flex;
+      align-items: center;
+      padding: 10px;
+      border-bottom: 1px solid #ddd;
+    }
+
+    .product img {
+      width: 80px;
+      margin-right: 10px;
+    }
+
+    .product .name {
+      flex-grow: 1;
+    }
+
+    .total {
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+    <header>
+        <!-- En-tête du site -->
+        <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+            <a class="navbar-brand" href="#">Woodycraft</a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link" href="#">Accueil</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="produits.html">Produits</a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Connexion
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="#">Sous-menu 1</a>
+                            <a class="dropdown-item" href="#">Sous-menu 2</a>
+                            <a class="dropdown-item" href="#">Sous-menu 3</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">
+                            <span class="fa fa-shopping-cart"></span> Panier
+                        </a>
+                    </li>
+                </ul>
+            
+            </div>
+        </nav>
+    </header>
+  <div class="container">
+    <h1>Panier</h1>
+    <div class="product">
+      <img src="product1.jpg" alt="Product 1">
+      <div class="name">Product 1</div>
+      <div class="price">$19.99</div>
+      <button class="btn btn-danger">Supprimer</button>
+    </div>
+    <div class="product">
+      <img src="product2.jpg" alt="Product 2">
+      <div class="name">Product 2</div>
+      <div class="price">$29.99</div>
+      <button class="btn btn-danger">Supprimer</button>
+    </div>
+    <div class="product">
+      <img src="product3.jpg" alt="Product 3">
+      <div class="name">Product 3</div>
+      <div class="price">$39.99</div>
+      <button class="btn btn-danger">Supprimer</button>
+    </div>
+    <div class="total mt-3">
+      Total: $89.97
+    </div>
+    <button class="btn btn-primary mt-3">Passer la commande</button>
+  </div>
+</body>
+</html>
