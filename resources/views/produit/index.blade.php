@@ -65,6 +65,14 @@
 
         </div>
     </nav>
+
+        @if(session()->has('info'))
+        <div class="alert alert-secondary" role="alert">
+                {{ session('info') }}
+            </div>
+        @endif
+
+
 </header>
 
 
