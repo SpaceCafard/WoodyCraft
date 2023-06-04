@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ma Boutique de Jouets</title>
+    <title>WoodyCraft</title>
     <!-- Liens vers les fichiers CSS -->
-    <link rel="stylesheet" href="formulaire.css">
+    <link rel="stylesheet" href="styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -19,7 +19,7 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item">
+                    <li class="nav-item active">
                         <a class="nav-link" href="{{ route('home') }}">Accueil</a>
                     </li>
                     <li class="nav-item">
@@ -40,7 +40,7 @@
     
                     @else
     
-                        <li class="nav-item dropdown active">
+                        <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 Profil
                             </a>
@@ -65,65 +65,55 @@
     
             </div>
         </nav>
-    
-            @if(session()->has('info'))
-            <div class="alert alert-secondary" role="alert">
-                    {{ session('info') }}
-                </div>
-            @endif
-    
-    
     </header>
     
-    
-   <div class="container">
-    <!-- Contenu principal du site -->
-   
 
-    <center>
-        <form action="{{ route('user.update', $customers->id) }}" method="POST" class="form">
-            @csrf
-            <span class="signup">Creer un compte</span>
-            @if ($errors->has('surname'))
-                <span class="text-danger">{{ $errors->first('surname') }}</span>
-            @endif
-            <input type="text" placeholder="Nom de famille" value="{{ old('surname', $customers->surname) }}"  name="surname" class="form--input">
-            @if ($errors->has('forname'))
-                <span class="text-danger">{{ $errors->first('forname') }}</span>
-            @endif
-            <input type="text" placeholder="Prenom" name="forname"  value="{{ old('surname', $customers->forname) }}" class="form--input">
-            @if ($errors->has('add1'))
-                <span class="text-danger">{{ $errors->first('add1') }}</span>
-            @endif
-            <input type="text" placeholder="Premiére adresse" name="add1" value="{{ old('add1', $customers->add1) }}" class="form--input">
-            @if ($errors->has('add2'))
-                <span class="text-danger">{{ $errors->first('add2') }}</span>
-            @endif
-            <input type="text" placeholder="Seconde adresse" name="add2" value="{{ old('add1', $customers->add2) }}" class="form--input">
-            @if ($errors->has('add3'))
-                <span class="text-danger">{{ $errors->first('add3') }}</span>
-            @endif
-            <input type="text" placeholder="Troisiéme adresse" name="add3" value="{{ old('add1', $customers->add3) }}" class="form--input">
-            @if ($errors->has('postcode'))
-                <span class="text-danger">{{ $errors->first('postcode') }}</span>
-            @endif
-            <input type="text" placeholder="Code postal" name="postcode" value="{{ old('postcode', $customers->postcode) }}" class="form--input">
-            @if ($errors->has('phone'))
-                <span class="text-danger">{{ $errors->first('phone') }}</span>
-            @endif
-            <input type="text" placeholder="Numéro de telephone" name="phone" value="{{ old('phone', $customers->phone) }}" size="10" class="form--input">
-            @if ($errors->has('email'))
-                <span class="text-danger">{{ $errors->first('email') }}</span>
-            @endif
-            <input type="email" placeholder="Adresse mail" name="email" value="{{ old('email', $customers->user->email) }}" class="form--input">
-            
-            
-            <input type="submit" value="Mettre à jour" class="form--submit">
-                
+    <div class="container">
+        <h1>Touvez votre bonheur parmis nos articles.</h1>
         
-        </form>
-</center>
-</div>
+        <div class="select">
+            <select onchange="window.location.href = this.value">
+                <option value="{{ route('products.index') }}" @unless($name)  selected @endunless>Toutes catégories</option>
+                @foreach($categories as $categorie)
+                    <option
+                        value="{{ route('products.categorie', $categorie->name) }}" {{$name == $categorie->name ? 'selected' : '' }}>{{ $categorie->name }}
+                    </option>
+                @endforeach
+            </select>
+        </div>
+        <div class="row row-cols-4"> 
+        @foreach ($products as $product)
+        @if($product->categorie->status == 0)
+            @if($product->status == 0)
+                    <div class="col">
+                        <div class="card">
+                            @if($product->image == null )
+                                <img src="{{ URL::to('image/notAvailable.png') }}" class="card-img-top" alt="{{ $product->nameP }}">
+                            @else
+                                <img src="{{ URL::to($product->image) }}" class="card-img-top" alt="{{ $product->nameP }}">
+                            @endif
+
+                            <div class="card-body">
+                                <h5 class="card-title">{{ $product->nameP }}</h5>
+                                <p class="card-text">{{ $product->description }}</p>
+                                @if( $product->stock <= 0 )
+                                    Hors-Stock
+                                @else
+                                    <form action="{{route('panier.ajout', $product->id)}}" method="POST">
+                                        @csrf
+
+                                        <input type="number" value="1" min="1" max="{{ $product->stock }}" name="quantity">
+                                        <input type="submit" class="btn btn-primary" value="Ajouter au Panier">
+                                    </form>
+                                @endif
+                            </div>
+                        </div>
+                    </div>
+            @endif
+        @endif
+    @endforeach
+    </div>
+</div> 
 
 
 

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Ma Boutique de Jouets</title>
+    <title>WoodyCraft</title>
     <!-- Liens vers les fichiers CSS -->
-    <link rel="stylesheet" href="formulaire.css">
+    <link rel="stylesheet" href="{{ URL::asset('formulaire.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -13,20 +13,66 @@
     <header>
         <!-- En-tête du site -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Woodycraft</a>
+            <a class="navbar-brand" href="{{ route('home') }}">WoodyCraft</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Accueil</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Accueil</a>
                     </li>
-                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.index') }}">Produits</a>
+                    </li>
+                    @guest
+    
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                Connexion
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="{{ route('Senregistrer') }}">
+                                S'inscrire
+                            </a>
+                        </li>
+    
+                    @else
+    
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                {{$user->name}}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('order.list') }}">Mes Commandes</a>
+                                <a class="dropdown-item" href="{{ route('user.profil') }}">Mon Profil</a>
+                                <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Modifer le Profil</a>
+                                <a class="dropdown-item" href="{{ route('user.identifiant', $user->id) }}">Modifier le Mot de Passe</a>
+                                <a class="dropdown-item" href="{{ route('signout') }}">Se deconnecter</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('panier.liste') }}">
+                                <span class="fa fa-shopping-cart"></span> Panier[{{$count}}]
+                            </a>
+                        </li>
+    
+                    @endguest
+    
+    
                 </ul>
-            
+    
             </div>
         </nav>
+    
+        @if(session()->has('info'))
+            <div class="alert alert-secondary" role="alert">
+                {{ session('info') }}
+            </div>
+        @endif
+    
+    
     </header>
     
     
@@ -35,15 +81,22 @@
    
 
     <center>
-    <form class="form1">
+    <form class="form1" action="{{ route('user.updateId', $user->id) }}" method="POST">
         <span class="signup">Modifier Mot de passe</span>
-        <input type="password" placeholder="Ancien Mot de passe" class="form--input">
-        <input type="password" placeholder="Nouveau Mot de passe" class="form--input">
-        <input type="password" placeholder="Confirmer Mot de passe" class="form--input">
+        @if(session()->has('info1'))
+        <span class="text-danger">{{ session('info1') }}</span>    
+        @endif
+        <input type="password" placeholder="Ancien Mot de passe" name="oldPwd" class="form--input">
+        @if ($errors->has('password'))
+                <span class="text-danger">{{ $errors->first('password') }}</span>
+        @endif
+        <input type="password" placeholder="Nouveau Mot de passe" name="verifPwd" class="form--input">
+        @if(session()->has('info2'))
+        <span class="text-danger">{{ session('info2') }}</span>    
+        @endif
+        <input type="password" placeholder="Confirmer Mot de passe" name="password" class="form--input">
         
-        <button class="form--submit">
-            Confirmer
-        </button>
+        <input type="submit" value="Mettre à jour" class="form--submit">
     </form>
 </center>
 </div>
