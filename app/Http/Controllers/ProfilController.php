@@ -87,7 +87,7 @@ class ProfilController extends Controller
 
             $user->update();
 
-            return redirect('/user/profil');
+            return redirect('/user/profil')->with('info','Votre profil à bien été mis à jour');
 
         }
         else
@@ -132,7 +132,7 @@ class ProfilController extends Controller
 
             if(!Hash::check($request->oldPwd, $user->password))
             {
-                return redirect('/user/profil/'. $id .'/mdp')->with('info','Votre mot de passe est incorect '. $check);
+                return redirect('/user/profil/'. $id .'/mdp')->with('info1','Votre mot de passe est incorect');
             }
             else
             {
@@ -143,11 +143,11 @@ class ProfilController extends Controller
 
                     $user->update();
 
-                    return redirect('/user/profil')->with('info','Votre mot de pass a été mis à jour');
+                    return redirect('/')->with('info','Votre mot de passe a été mis à jour');
                 }
                 else
                 {
-                    return redirect('/user/profil/'. $id .'/mdp')->with('info','Les mots de pass ne correspondent pas');
+                    return redirect('/user/profil/'. $id .'/mdp')->with('info2','Les mots de passe ne correspondent pas');
                 }
             }
 

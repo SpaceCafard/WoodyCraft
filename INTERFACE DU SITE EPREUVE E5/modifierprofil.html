@@ -13,20 +13,66 @@
     <header>
         <!-- En-tête du site -->
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-            <a class="navbar-brand" href="#">Woodycraft</a>
+            <a class="navbar-brand" href="{{ route('home') }}">WoodyCraft</a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="#">Accueil</a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('home') }}">Accueil</a>
                     </li>
-                   
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('products.index') }}">Produits</a>
+                    </li>
+                    @guest
+    
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="{{ route('login') }}">
+                                Connexion
+                            </a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link" href="{{ route('Senregistrer') }}">
+                                S'inscrire
+                            </a>
+                        </li>
+    
+                    @else
+    
+                        <li class="nav-item dropdown active">
+                            <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Profil
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-item" href="{{ route('order.list') }}">Mes Commandes</a>
+                                <a class="dropdown-item" href="{{ route('user.profil') }}">Mon Profil</a>
+                                <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Modifer le Profil</a>
+                                <a class="dropdown-item" href="{{ route('user.identifiant', $user->id) }}">Modifier le Mot de Passe</a>
+                                <a class="dropdown-item" href="{{ route('signout') }}">Se deconnecter</a>
+                            </div>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{{ route('panier.liste') }}">
+                                <span class="fa fa-shopping-cart"></span> Panier[{{$count}}]
+                            </a>
+                        </li>
+    
+                    @endguest
+    
+    
                 </ul>
-            
+    
             </div>
         </nav>
+    
+            @if(session()->has('info'))
+            <div class="alert alert-secondary" role="alert">
+                    {{ session('info') }}
+                </div>
+            @endif
+    
+    
     </header>
     
     
@@ -35,23 +81,47 @@
    
 
     <center>
-    <form class="form">
-        <span class="signup">Modification Profil</span>
-        <input type="email" placeholder="Nom de famille" class="form--input">
-        <input type="email" placeholder="Prenom" class="form--input">
-        <input type="email" placeholder="Premiére adresse" class="form--input">
-        <input type="email" placeholder="Seconde adresse" class="form--input">
-        <input type="email" placeholder="Troisiéme adresse" class="form--input">
-        <input type="email" placeholder="Code postal" class="form--input">
-        <input type="email" placeholder="Numéro de telephone" class="form--input">
-        <input type="email" placeholder="Adresse mail" class="form--input">
-        <input type="password" placeholder="Mot de passe" class="form--input">
-        <input type="password" placeholder="Pseudo" class="form--input">
-      
-        <button class="form--submit">
-            Mettre a jour
-        </button>
-    </form>
+        <form action="{{ route('user.update', $customers->id) }}" method="POST" class="form">
+            @csrf
+            <span class="signup">Creer un compte</span>
+            @if ($errors->has('surname'))
+                <span class="text-danger">{{ $errors->first('surname') }}</span>
+            @endif
+            <input type="text" placeholder="Nom de famille" value="{{ old('surname', $customers->surname) }}"  name="surname" class="form--input">
+            @if ($errors->has('forname'))
+                <span class="text-danger">{{ $errors->first('forname') }}</span>
+            @endif
+            <input type="text" placeholder="Prenom" name="forname"  value="{{ old('surname', $customers->forname) }}" class="form--input">
+            @if ($errors->has('add1'))
+                <span class="text-danger">{{ $errors->first('add1') }}</span>
+            @endif
+            <input type="text" placeholder="Premiére adresse" name="add1" value="{{ old('add1', $customers->add1) }}" class="form--input">
+            @if ($errors->has('add2'))
+                <span class="text-danger">{{ $errors->first('add2') }}</span>
+            @endif
+            <input type="text" placeholder="Seconde adresse" name="add2" value="{{ old('add1', $customers->add2) }}" class="form--input">
+            @if ($errors->has('add3'))
+                <span class="text-danger">{{ $errors->first('add3') }}</span>
+            @endif
+            <input type="text" placeholder="Troisiéme adresse" name="add3" value="{{ old('add1', $customers->add3) }}" class="form--input">
+            @if ($errors->has('postcode'))
+                <span class="text-danger">{{ $errors->first('postcode') }}</span>
+            @endif
+            <input type="text" placeholder="Code postal" name="postcode" value="{{ old('postcode', $customers->postcode) }}" class="form--input">
+            @if ($errors->has('phone'))
+                <span class="text-danger">{{ $errors->first('phone') }}</span>
+            @endif
+            <input type="text" placeholder="Numéro de telephone" name="phone" value="{{ old('phone', $customers->phone) }}" size="10" class="form--input">
+            @if ($errors->has('email'))
+                <span class="text-danger">{{ $errors->first('email') }}</span>
+            @endif
+            <input type="email" placeholder="Adresse mail" name="email" value="{{ old('email', $customers->user->email) }}" class="form--input">
+            
+            
+            <input type="submit" value="Mettre à jour" class="form--submit">
+                
+        
+        </form>
 </center>
 </div>
 

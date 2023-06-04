@@ -1,16 +1,16 @@
 body {
     background-color: #f8f9fa;
     font-family: Arial, sans-serif;
-    
+
     margin: 0;
     padding: 0;
   }
-  
+
   .container {
   margin-top: 30px;
   margin-left: 500px;
   }
-  
+
   h1 {
     text-align: center;
     margin-bottom: 40px;
@@ -19,7 +19,6 @@ body {
   .form {
     background-color: white;
     width: 500px;
-   
     padding: 3.125em;
     border-radius: 10px;
     display: flex;
@@ -38,7 +37,7 @@ body {
     align-items: center;
     box-shadow: 5px 5px 15px -1px rgba(0,0,0,0.75);
   }
-  
+
   .signup {
     color: rgb(77, 75, 75);
     text-transform: uppercase;
@@ -48,9 +47,9 @@ body {
     font-size: x-large;
     margin-bottom: 0.5em;
   }
-  
+
   .form--input {
-  
+
     margin-bottom: 1.25em;
     height: 40px;
     width: 350px;
@@ -60,30 +59,30 @@ body {
     font-family: 'Inter', sans-serif;
     outline: none;
   }
-  
+
   .form--input:focus {
     border: 1px solid #639;
     outline: none;
   }
-  
+
   .form--marketing {
     display: flex;
     margin-bottom: 1.25em;
     align-items: center;
   }
-  
+
   .form--marketing > input {
     margin-right: 0.625em;
   }
-  
+
   .form--marketing > label {
     color: grey;
   }
-  
+
   .checkbox, input[type="checkbox"] {
     accent-color: #639;
   }
-  
+
   .form--submit {
 
     padding: 0.625em;
@@ -93,7 +92,7 @@ body {
     border: 1px dashed #639;
     cursor: pointer;
   }
-  
+
   .form--submit:hover {
     color: #639;
     background-color: white;

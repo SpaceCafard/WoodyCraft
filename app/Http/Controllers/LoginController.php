@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Panier;
 use Illuminate\Http\Request;
 use Hash;
 use Session;
@@ -17,23 +18,30 @@ class LoginController extends Controller
 
     public function customLogin(Request $request)
     {
-        $request->validate([
-            'name' => 'required',
-            'password' => 'required',
-        ]);
 
-        $credentials = $request->only('name', 'password');
-        if (Auth::attempt($credentials)) {
-            if (auth()->user()->is_admin == 1) {
-                return redirect()->route('admin.home');
-            }else{
+        if(Auth::id()) {
+            return redirect()->intended('/')->with('info', 'Vous êtes déja connecter');
+        }
+        else {
+            $request->validate([
+                'name' => 'required',
+                'password' => 'required',
+            ]);
 
-                return redirect()->intended('/')->with('info', 'Connecter avec succès');
+            $credentials = $request->only('name', 'password');
+            if (Auth::attempt($credentials)) {
+                if (auth()->user()->is_admin == 1) {
+                    return redirect()->route('admin.home');
+                } else {
+
+                    return redirect()->intended('/')->with('info', 'Connecter avec succès');
+                }
+
             }
 
-       }
+            return redirect("login")->with('info', 'La combinaison Identifiant/Mot de passe est incorrect');
+        }
 
-        return redirect("login")->with('info', 'Nick Mouk');
     }
 
 
