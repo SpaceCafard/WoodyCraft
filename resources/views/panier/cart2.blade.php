@@ -113,7 +113,7 @@
                                                 <input type="hidden" name="id" value="{{ $panier->id }}">
                                                 <input type="number" name="quantity" min="1" value="{{ $panier->quantity }}"/>
                                                 <input type="submit" class="btn btn-primary" value="Mettre à jour">
-                                            </form>
+                                            </form><p>ㅤ</p>
                                             <form action="{{ route('panierProd.remove',$panier->id )}}" method="post">
                                                 @csrf
                                                 @method('DELETE')

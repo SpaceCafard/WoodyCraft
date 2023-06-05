@@ -134,23 +134,23 @@
 
                     <div class="card-body">
                         <h5 class="card-title">Adresse de livraison</h5>
-                        @if ($errors->has('lastname'))
+                        @if ($errors->has('surname'))
                             <span class="text-danger">Vous devez renseigner le nom de famille</span>
                         @endif
-                        <input type="text" placeholder="Nom de famille" name="lastname" class="form--input">
-                        @if ($errors->has('firstname'))
+                        <input type="text" placeholder="Nom de famille" name="firstname" class="form--input">
+                        @if ($errors->has('forname'))
                             <span class="text-danger">Vous devez renseigner le prénom</span>
                         @endif
-                        <input type="text" placeholder="Prenom" name="firstname" class="form--input">
+                        <input type="text" placeholder="Prenom" name="forname" class="form--input">
                         @if ($errors->has('add1'))
                             <span class="text-danger">Vous devez renseigner l'adresse</span>
                         @endif
                         <input type="text" placeholder="Premiére adresse" name="add1" class="form--input">
                         <input type="text" placeholder="Seconde adresse(Facultative)" name="add2" class="form--input">
-                        @if ($errors->has('city'))
+                        @if ($errors->has('ville'))
                             <span class="text-danger">Vous devez renseigner la ville</span>
                         @endif
-                        <input type="text" placeholder="Ville" name="city" class="form--input">
+                        <input type="text" placeholder="Ville" name="postcode" class="form--input">
                         @if ($errors->has('postcode'))
                             <span class="text-danger">Vous devez renseigner votre code postal</span>
                         @endif
@@ -189,7 +189,6 @@
                 </div>
             </div>
         </div>
-        q
         <input type="hidden" name="total" value="{{ $total }}"/>
     </form>
 </div>
