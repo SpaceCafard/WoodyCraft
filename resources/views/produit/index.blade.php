@@ -41,7 +41,7 @@
                 @else
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{$user->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -83,9 +83,13 @@
         <select onchange="window.location.href = this.value">
             <option value="{{ route('products.index') }}" @unless($name)  selected @endunless>Toutes catégories</option>
             @foreach($categories as $categorie)
+                @if($categorie->status == 0)
                 <option
                     value="{{ route('products.categorie', $categorie->name) }}" {{$name == $categorie->name ? 'selected' : '' }}>{{ $categorie->name }}
                 </option>
+                @else
+                    @continue
+                @endif
             @endforeach
         </select>
     </div>

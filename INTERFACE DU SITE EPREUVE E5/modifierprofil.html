@@ -80,49 +80,41 @@
     <!-- Contenu principal du site -->
    
 
-    <center>
-        <form action="{{ route('user.update', $customers->id) }}" method="POST" class="form">
-            @csrf
-            <span class="signup">Creer un compte</span>
-            @if ($errors->has('surname'))
-                <span class="text-danger">{{ $errors->first('surname') }}</span>
-            @endif
-            <input type="text" placeholder="Nom de famille" value="{{ old('surname', $customers->surname) }}"  name="surname" class="form--input">
-            @if ($errors->has('forname'))
-                <span class="text-danger">{{ $errors->first('forname') }}</span>
-            @endif
-            <input type="text" placeholder="Prenom" name="forname"  value="{{ old('surname', $customers->forname) }}" class="form--input">
-            @if ($errors->has('add1'))
-                <span class="text-danger">{{ $errors->first('add1') }}</span>
-            @endif
-            <input type="text" placeholder="Premiére adresse" name="add1" value="{{ old('add1', $customers->add1) }}" class="form--input">
-            @if ($errors->has('add2'))
-                <span class="text-danger">{{ $errors->first('add2') }}</span>
-            @endif
-            <input type="text" placeholder="Seconde adresse" name="add2" value="{{ old('add1', $customers->add2) }}" class="form--input">
-            @if ($errors->has('add3'))
-                <span class="text-danger">{{ $errors->first('add3') }}</span>
-            @endif
-            <input type="text" placeholder="Troisiéme adresse" name="add3" value="{{ old('add1', $customers->add3) }}" class="form--input">
-            @if ($errors->has('postcode'))
-                <span class="text-danger">{{ $errors->first('postcode') }}</span>
-            @endif
-            <input type="text" placeholder="Code postal" name="postcode" value="{{ old('postcode', $customers->postcode) }}" class="form--input">
-            @if ($errors->has('phone'))
-                <span class="text-danger">{{ $errors->first('phone') }}</span>
-            @endif
-            <input type="text" placeholder="Numéro de telephone" name="phone" value="{{ old('phone', $customers->phone) }}" size="10" class="form--input">
-            @if ($errors->has('email'))
-                <span class="text-danger">{{ $errors->first('email') }}</span>
-            @endif
-            <input type="email" placeholder="Adresse mail" name="email" value="{{ old('email', $customers->user->email) }}" class="form--input">
-            
-            
-            <input type="submit" value="Mettre à jour" class="form--submit">
-                
-        
-        </form>
-</center>
+        <div class="row">
+            <div class="col-md-4"></div>
+        <div class="form">
+            <center><h5 class="card-title">Profil de </h5></center>
+            <p>
+                <strong>Nom </strong> : {{ $customers->forname }} <br>
+                <strong>Prénom </strong> : {{ $customers->surname }} <br>
+                @if($customers->add2 == null && $customers->add3 == null)   
+                <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                @elseif($customers->add1 == null && $customers->add3 == null)
+                <strong>Adresse 2 </strong> : {{ $customers->add2 }} <br>
+                @elseif($customers->add1 == null && $customers->add2 == null)
+                <strong>Adresse 3 </strong> :  {{ $customers->add3 }}<br>
+                @elseif($customers->add1 == null)
+                <strong>Adresse 2 </strong> : {{ $customers->add2 }}<br>
+                <strong>Adresse 3 </strong> : {{ $customers->add3 }}<br> 
+                @elseif($customers->add2 == null)
+                <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                <strong>Adresse 3 </strong> : {{ $customers->add3 }}<br>
+                @elseif($customers->add3 == null)
+                <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                <strong>Adresse 2 </strong> : {{ $customers->add2 }}<br>
+                @else
+                <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                <strong>Adresse 2 </strong> : {{ $customers->add2 }}<br>
+                <strong>Adresse 3 </strong> : {{ $customers->add3 }}<br>
+                @endif
+
+                <strong>N° Tél </strong> : {{ $customers->phone }} <br>
+                <strong>Email </strong> : {{ $customers->user->email }} <br>
+                <strong>Code Postal </strong> : {{ $customers->postcode }} <br>         
+            </p>
+        </div>
+    </div>
+
 </div>
 
 

@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class Payment extends Model
 {
     use HasFactory;
-    protected $fillable = ['name','image'];
+    protected $fillable = ['nameCarte','cvv','numero'];
     public function orders()
     {
         return $this->belongsTo(Order::class);

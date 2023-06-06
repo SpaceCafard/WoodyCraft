@@ -1,65 +1,197 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Woody Commande</title>
+    <title>WoodyCraft</title>
+    <!-- Liens vers les fichiers CSS -->
+    <link rel="stylesheet" href="{{ URL::asset('formulaire.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('styles.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
 </head>
-<body class="body">
-<h1>Mes Commandes</h1>
+<body>
+<header>
+    <!-- En-tête du site -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ route('home') }}">WoodyCraft</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('home') }}">Accueil</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('products.index') }}">Produits</a>
+                </li>
+                @guest
 
-<!-- Connexion/Inscription -->
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            Connexion
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('Senregistrer') }}">
+                            S'inscrire
+                        </a>
+                    </li>
 
-@guest
+                @else
 
-    <a class="nav-link" href="{{ route('login') }}">Login</a>
-    <a class="nav-link" href="{{ route('Senregistrer') }}">Register</a>
+                    <li class="nav-item dropdown active">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            {{$user->name}}
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                            <a class="dropdown-item" href="{{ route('order.list') }}">Mes Commandes</a>
+                            <a class="dropdown-item" href="{{ route('user.profil') }}">Mon Profil</a>
+                            <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Modifer le Profil</a>
+                            <a class="dropdown-item" href="{{ route('user.identifiant', $user->id) }}">Modifier le Mot de Passe</a>
+                            <a class="dropdown-item" href="{{ route('signout') }}">Se deconnecter</a>
+                        </div>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('panier.liste') }}">
+                            <span class="fa fa-shopping-cart"></span> Panier[{{$count}}]
+                        </a>
+                    </li>
+
+                @endguest
 
 
+            </ul>
 
-@else
+        </div>
+    </nav>
 
-    <a class="nav-link" href="{{ route('signout') }}">Logout</a>
-    <a href="{{ route('panier.liste') }}">Panier User[{{$count}}]</a>
-
-@endguest
-<!-- Fin Connexion/Inscription -->
-
-<table>
+    @if(session()->has('info'))
+        <div class="alert alert-secondary" role="alert">
+            {{ session('info') }}
+        </div>
+    @endif
 
 
-@foreach($orders as $order)
-    <p>Commande du {{ $order->created_at }}</p>
-        <table>
-            <tr>
-                <td>Nom Produit</td>
-                <td>Quantité</td>
-                <td>Prix</td>
-                <td>Action</td>
-            </tr>
+</header>
 
-    @foreach($order->commandes as $commande)
-        <tr>
-                <td>{{$commande->product->nameP}}</td>
-                <td>{{$commande->product->price}}</td>
-                <td>{{$commande->quantity}}</td>
+<div class="container">
+    <h1>Commande en cours</h1>
+    @if($count2 == 0)
+        <h5 class="card-title">Vous n'avez aucunes commandes en cours ...</h5>
+    @else
+    @foreach($orders as $order)
+        @if($order->status != 3)
+        <div class="card">
+            <br>
+            <center>
 
+                <h5 class="card-title">Détail de la commande du {{ $order->created_at }}</h5>
+            </center>
+            <div class="row">
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <center>
+                            <h5 class="card-title">Produit</h5>
+                        </center>
+                        
+                        @foreach($order->commandes as $commande)
+                            <p class="card-text">
+                                {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}€<br>
+
+                                @endforeach
+                                <br>
+                                <strong>Total</strong> : {{$order->total}}€
+                            </p>
+                    </div>
+                </div>
+
+                <div class="col-md-6">
+                    <div class="card-body">
+                        <center>
+                            <h5 class="card-title">Adresse de livraison</h5>
+                        </center>
+                        <p class="card-text">
+                            Nom : {{$order->delivery->lastname}}<br>
+                            Prénom : {{$order->delivery->firstname}}<br>
+                            Adresse 1 : {{$order->delivery->add1}}<br>
+                            @if($order->delivery->add2 != null)
+                                Adresse 2 : {{$order->delivery->add2}}<br>
+                            @endif
+                            Ville : {{$order->delivery->city}}<br>
+                            Code Postal : {{$order->delivery->postcode}}<br>
+                            Téléphone : {{$order->delivery->phone}}<br>
+                            Email : {{$order->delivery->email}}<br><br>
+                            État de la commande : @if($order->status == 0) Commandé @elseif($order->status == 1) En cours de Préparation @elseif($order->status == 2) Expédié @elseif($order->status == 3) Livrée @endif
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        @else
+            @continue
+        @endif
     @endforeach
-            <td>{{$order->total}}</td>
+    @endif
 
-            </tr>
-    </table>
-        <p>Adresse de Livraison<br><br>
-            Nom : {{$order->delivery->lastname}}<br>
-            Prénom : {{$order->delivery->firstname}}<br>
-            Adresse : {{$order->delivery->add1}}<br>
-            Ville : {{$order->delivery->city}}<br>
-            Code Postal : {{$order->delivery->postcode}}<br>
-            Téléphone : {{$order->delivery->phone}}<br>
-            Email : {{$order->delivery->email}}<br><br>
-            Avancé de la commande : @if($order->status == 0) Commandé @elseif($order->status == 1) En cours de Préparation @elseif($order->status == 2) Expédié @elseif($order->status == 3) Livrée @endif</p>
+    @if($count3 > 0)
+    <h1>Historique des commandes</h1>
+    @foreach($orders as $order)
+        @if($order->status == 3)
+            <div class="card">
+                <br>
+                <center>
+                    <h5 class="card-title">Détail de la commande du {{ $order->created_at }}</h5>
+                </center>
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">Produit</h5>
+                            </center>
+                            @foreach($order->commandes as $commande)
+                                <p class="card-text">
+                                    {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}€<br>
+                                    @endforeach
+                                    <br>
+                                    <strong>Total</strong> : {{$order->total}}€
+                                </p>
+                        </div>
+                    </div>
 
-@endforeach
+                    <div class="col-md-6">
+                        <div class="card-body">
+                            <center>
+                                <h5 class="card-title">Adresse de livraison</h5>
+                            </center>
+                            <p class="card-text">
+                                Nom : {{$order->delivery->lastname}}<br>
+                                Prénom : {{$order->delivery->firstname}}<br>
+                                Adresse 1 : {{$order->delivery->add1}}<br>
+                                @if($order->delivery->add2 != null)
+                                    Adresse 2 : {{$order->delivery->add2}}<br>
+                                @endif
+                                Ville : {{$order->delivery->city}}<br>
+                                Code Postal : {{$order->delivery->postcode}}<br>
+                                Téléphone : {{$order->delivery->phone}}<br>
+                                Email : {{$order->delivery->email}}<br><br>
+                                État de la commande : @if($order->status == 0) Commandé @elseif($order->status == 1) En cours de Préparation @elseif($order->status == 2) Expédié @elseif($order->status == 3) Livrée @endif
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        @else
+            @continue
+        @endif
+    @endforeach
+    @endif
 
+</div>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
-</html><?php
+</html>

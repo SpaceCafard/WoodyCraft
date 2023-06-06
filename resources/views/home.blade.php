@@ -27,12 +27,12 @@
                 </li>
                 @guest
 
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('login') }}">
                             Connexion
                         </a>
                     </li>
-                    <li class="nav-item dropdown">
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('Senregistrer') }}">
                             S'inscrire
                         </a>
@@ -41,7 +41,7 @@
                 @else
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        <a class="nav-link dropdown-toggle" href="" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             {{$user->name}}
                         </a>
                         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
@@ -95,7 +95,7 @@
                                     <form action="{{route('panier.ajout', $product->id)}}" method="POST">
                                         @csrf
 
-                                        <input type="number" value="1" min="1" max="{{ $product->stock }}" name="quantity">
+                                        <input type="number" value="1" min="1" class="form--input" max="{{ $product->stock }}" name="quantity">
                                         <input type="submit" class="btn btn-primary" value="Ajouter au Panier">
                                     </form>
                                 @endif

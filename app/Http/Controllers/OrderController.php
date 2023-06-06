@@ -26,7 +26,7 @@ class OrderController extends Controller
             {
 
                 $payments = Payment::all();
-                return view('panier.order', compact('payments','paniers'));
+                return view('panier.order', compact('payments','paniers','user','count'));
             }
             else{
                 return redirect('/showPanier')->with('info', 'Votre panier est vide');
@@ -55,14 +55,21 @@ class OrderController extends Controller
                 'postcode' => 'required' ,
                 'phone' => 'required|max:10' ,
                 'email' => 'required' ,
-                'payment_id'=> 'required'
-
-
+                'nameCarte' => 'required' ,
+                'numero' => 'required' ,
+                'cvv' => 'required'
 
             ]);
 
 
-            $paymentId = $request->get('payment_id');
+            $payment = new payment([
+                'nameCarte' => $request->get('nameCarte'),
+                'numero' => $request->get('numero'),
+                'cvv' => $request->get('cvv'),
+            ]);
+
+            $payment->save();
+            $paymentId = Payment::latest()->first()->id;
 
             $deliveryadd = new Delivery([
                 'firstname' => $request->get('firstname'),
@@ -133,10 +140,11 @@ class OrderController extends Controller
         {
             $user=auth()->user();
             $count = Panier::where('name', $user->name)->count();
-            $orders = Order::where('customer_id', $user->customer_id)->get();
+            $orders = Order::where('customer_id', $user->customer_id)->oldest('status')->get();
+            $count2 = Order::where('customer_id', $user->customer_id)->oldest('status')->count();
+            $count3 = Order::where('customer_id', $user->customer_id)->where('status', 3)->oldest('status')->count();
 
-
-            return view('panier.listOrder', compact('orders','count'));
+            return view('panier.listOrder', compact('orders','count','user','count2','count3'));
 
         }
         else{
@@ -147,11 +155,11 @@ class OrderController extends Controller
     public function listOrderAdmin(){
         if(Auth::id())
         {
-
-            $orders = Order::all();
+            $user=auth()->user();
+            $orders = Order::oldest('status')->get();
             $customer = Customer::all();
 
-            return view('admin.listOrderAdmin', compact('orders','customer'));
+            return view('admin.listOrderAdmin', compact('orders','customer','user'));
 
         }
         else{
