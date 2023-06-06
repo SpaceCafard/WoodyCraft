@@ -156,7 +156,7 @@ class OrderController extends Controller
         if(Auth::id())
         {
             $user=auth()->user();
-            $orders = Order::all();
+            $orders = Order::oldest('status')->get();
             $customer = Customer::all();
 
             return view('admin.listOrderAdmin', compact('orders','customer','user'));

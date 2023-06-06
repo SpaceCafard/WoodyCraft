@@ -44,7 +44,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.home') }}">Accueil</a>
                 </li>
-                <li class="nav-item dropdown active">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Produits
                     </a>
@@ -55,7 +55,7 @@
                     </div>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ route('admin.cat') }}">Catégories</a>
+                    <a class="nav-link active" href="{{ route('admin.cat') }}">Catégories</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('order.admin') }}">Commandes</a>

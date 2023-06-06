@@ -35,7 +35,7 @@ class AdminController extends Controller
     {
         if(Auth::id())
         {
-            $customers= Customer::all();
+            $customers= Customer::oldest('forname')->get();
 
             return view('admin.listUser', compact('customers'));
 
@@ -50,7 +50,8 @@ class AdminController extends Controller
         if(Auth::id())
         {
             $customers = Customer::query()->findOrFail($id);
-            return view('admin.showUser', compact('customers'));
+            $user = auth()->user();
+            return view('admin.showUser', compact('customers','user'));
         }
         else{
             return redirect('login');

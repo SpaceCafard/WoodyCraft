@@ -24,6 +24,7 @@
 
         .product .name {
             flex-grow: 1;
+            width: 50%;
         }
 
         .total {
@@ -44,7 +45,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.home') }}">Accueil</a>
                 </li>
-                <li class="nav-item dropdown active">
+                <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                         Produits
                     </a>
@@ -60,7 +61,7 @@
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('order.admin') }}">Commandes</a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item active">
                     <a class="nav-link" href="{{ route('admin.userList') }}">Utilisateur</a>
                 </li>
                 @guest
@@ -78,11 +79,11 @@
 
                 @else
 
-                <li class="nav-item dropdown">
-                    <a class="nav-link" href="{{ route('signout') }}">
-                        Déconnexion
-                    </a>
-                </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('signout') }}">
+                            Déconnexion
+                        </a>
+                    </li>
 
             @endguest
 
@@ -101,21 +102,45 @@
     <!-- Contenu principal du site -->
 
 
-    <center>
-        <form action="{{ route('admin.storeCat') }}" enctype="multipart/form-data" method="POST" class="form">
-            @method('put')
-            @csrf
-            <span class="signup">Ajouter une catégorie</span>
-            @if ($errors->has('name'))
-                <span class="text-danger">Vous devez entrer un nom pour votre catégorie</span>
-            @endif
-            <input type="text" placeholder="Nom de la Categorie" name="name" class="form--input">
-            <input type="submit" value="Crée" class="form--submit">
+    <div class="row">
+        <div class="col-md-4"></div>
 
+        <div class="form">
+            <center><h5 class="card-title">Profil de {{ $user->name }}</h5></center>
+            <p>
+                <strong>Nom </strong> : {{ $customers->forname }} <br>
+                <strong>Prénom </strong> : {{ $customers->surname }} <br>
+                @if($customers->add2 == null && $customers->add3 == null)
+                    <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                @elseif($customers->add1 == null && $customers->add3 == null)
+                    <strong>Adresse 2 </strong> : {{ $customers->add2 }} <br>
+                @elseif($customers->add1 == null && $customers->add2 == null)
+                    <strong>Adresse 3 </strong> :  {{ $customers->add3 }}<br>
+                @elseif($customers->add1 == null)
+                    <strong>Adresse 2 </strong> : {{ $customers->add2 }}<br>
+                    <strong>Adresse 3 </strong> : {{ $customers->add3 }}<br>
+                @elseif($customers->add2 == null)
+                    <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                    <strong>Adresse 3 </strong> : {{ $customers->add3 }}<br>
+                @elseif($customers->add3 == null)
+                    <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                    <strong>Adresse 2 </strong> : {{ $customers->add2 }}<br>
+                @else
+                    <strong>Adresse 1 </strong> : {{ $customers->add1 }} <br>
+                    <strong>Adresse 2 </strong> : {{ $customers->add2 }}<br>
+                    <strong>Adresse 3 </strong> : {{ $customers->add3 }}<br>
+                @endif
 
-        </form>
-    </center>
+                <strong>N° Tél </strong> : {{ $customers->phone }} <br>
+                <strong>Email </strong> : {{ $customers->user->email }} <br>
+                <strong>Code Postal </strong> : {{ $customers->postcode }} <br>
+            </p>
+        </div>
+        <div class="col-md-4"></div>
+    </div>
+
 </div>
+
 
 <!-- Liens vers les fichiers JavaScript de Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
