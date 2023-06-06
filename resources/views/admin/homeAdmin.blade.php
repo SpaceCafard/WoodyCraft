@@ -13,17 +13,24 @@
 <header>
     <!-- En-tête du site -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ route('home') }}">WoodyCraft Admin</a>
+        <a class="navbar-brand" href="{{ route('admin.home') }}">WoodyCraft Admin</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mr-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ route('home') }}">Accueil</a>
+                    <a class="nav-link" href="{{ route('admin.home') }}">Accueil</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ route('products.index') }}">Produits</a>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Produits
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('products.index') }}">Produits en ligne</a>
+                        <a class="dropdown-item" href="{{ route('admin.archive') }}">Produits archivé</a>
+
+                    </div>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link" href="{{ route('admin.cat') }}">Catégories</a>
@@ -50,15 +57,9 @@
                 @else
 
                     <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="{{ route('user.profil') }}" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            {{$user->name}}
+                        <a class="nav-link" href="{{ route('signout') }}">
+                            Déconnexion
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <a class="dropdown-item" href="{{ route('user.profil') }}">Mon Profil</a>
-                            <a class="dropdown-item" href="{{ route('user.edit', $user->id) }}">Modifer le Profil</a>
-                            <a class="dropdown-item" href="{{ route('user.identifiant', $user->id) }}">Modifier le Mot de Passe</a>
-                            <a class="dropdown-item" href="{{ route('signout') }}">Se deconnecter</a>
-                        </div>
                     </li>
 
                 @endguest

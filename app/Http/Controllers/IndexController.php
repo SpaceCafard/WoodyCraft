@@ -39,7 +39,8 @@ class IndexController extends Controller
 
         if(Auth::id()) {
             if (auth()->user()->is_admin == 1) {
-                return view('admin.indexAdmin', compact('products','name','categories'));
+                $user = auth()->user();
+                return view('admin.indexAdmin', compact('products','name','categories','user'));
             }
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
@@ -69,7 +70,8 @@ class IndexController extends Controller
     public function create()
     {
         $categories = Categorie::all();
-        return view('admin.create', compact('categories'));
+        $user = auth()->user();
+        return view('admin.create', compact('categories','user'));
     }
 
     public function store(Request $request)
@@ -104,7 +106,7 @@ class IndexController extends Controller
 
 
         $products->save();
-        return redirect('/products');
+        return redirect('/products')->with('info','Produit crée');
     }
 
     public function edit($id)
@@ -112,7 +114,8 @@ class IndexController extends Controller
         $products = Product::query()->findOrFail($id);
         $ip = $_SERVER['SERVER_ADDR'];
         $categories = Categorie::all();
-        return view('admin.edit', compact('categories','products','ip'));
+        $user = auth()->user();
+        return view('admin.edit', compact('categories','products','ip','user'));
     }
 
 
@@ -168,10 +171,16 @@ class IndexController extends Controller
     {
 
         $products = Product::query()->findOrFail($id);
-        $products->status = 0;
-        $products->update();
+        if ($products->categorie->status == 0) {
+            $products->status = 0;
+            $products->update();
+            return back()->with('info','Produit remis en ciruclation');
+        }
+        else{
+            return back()->with('info','Le produit ne peut-etre remis en circulation car la catégorie associé : '. $products->categorie->name . ' est désactivée');
+        }
 
-        return back()->with('info','produit remis en ciruclation');
+
 
     }
 

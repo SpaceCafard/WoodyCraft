@@ -1,94 +1,129 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Woody</title>
+    <title>WoodyCraft</title>
+    <!-- Liens vers les fichiers CSS -->
+    <link rel="stylesheet" href="{{ URL::asset('styles.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('formulaire.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .product {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product img {
+            width: 80px;
+            margin-right: 10px;
+        }
+
+        .product .name {
+            flex-grow: 1;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body class="body">
-<h1>Produit Archivé</h1>
+<body>
+<header>
+    <!-- En-tête du site -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ route('admin.home') }}">WoodyCraft Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.home') }}">Accueil</a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Produits
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('products.index') }}">Produits en ligne</a>
+                        <a class="dropdown-item" href="{{ route('admin.archive') }}">Produits archivé</a>
 
-<!-- Message Pop Up -->
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.cat') }}">Catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('order.admin') }}">Commandes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.userList') }}">Utilisateur</a>
+                </li>
+                @guest
 
-@if(session()->has('info'))
-    <div>
-        {{ session('info') }}
-    </div>
-@endif
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            Connexion
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('Senregistrer') }}" >
+                            S'inscrire
+                        </a>
+                    </li>
 
-
-
-<!-- Fin Message Pop Up -->
-
-<!-- Ajout d'un Produit -->
-
-<a href="{{ route('products.create') }}">Ajouter un produit</a>
-
-<!-- Fin Ajout d'un Produit -->
-
-<!-- Connexion/Inscription -->
-
-@guest
-
-    <a class="nav-link" href="{{ route('login') }}">Login</a>
-    <a class="nav-link" href="{{ route('Senregistrer') }}">Register</a>
-
-
-
-@else
-
-    <a class="nav-link" href="{{ route('signout') }}">Logout</a>
-    <a class="nav-link" href="{{ route('products.index') }}">Tout les Produits</a>
-    <a class="nav-link" href="{{ route('admin.cat') }}">Toute les Catégories </a>
-    <a class="nav-link" href="{{ route('order.admin') }}">Toute les Commandes</a>
-    <a class="nav-link" href="{{ route('admin.userList') }}">Toute les Utilisateur</a>
-
-
-@endguest
-<!-- Fin Connexion/Inscription -->
-
-<!-- Affichage des données -->
-
-<table>
-    <tr>
-        <th>ID</th>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Prix</th>
-        <th>Categorie</th>
-        <th>Stock</th>
-        <th>Action</th>
-
-    </tr>
-    @foreach ($products as $product)
-
-        @if($product->status == 1)
-            <tr>
-                <td>{{ $product->id }}</td>
-                <td>{{ $product->nameP }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->price }}</td>
-                <td>{{ $product->categorie->name }}</td>
-                <td>{{ $product->stock }}</td>
-                <td>
-
-                    <form action="{{ route('products.actived',$product->id )}}" method="post">
-                        @csrf
-                        <input type="submit" value="Réactiver">
-                    </form>
-                </td>
                 @else
-                    @continue
-                @endif
-            </tr>
-            @endforeach
-</table>
 
-<!-- Fin Affichage des données -->
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('signout') }}">
+                            Déconnexion
+                        </a>
+                    </li>
+
+            @endguest
 
 
+
+        </div>
+    </nav>
+    @if(session()->has('info'))
+        <div class="alert alert-secondary" role="alert">
+            {{ session('info') }}
+        </div>
+    @endif
+
+</header>
+<div class="container">
+    <h1>Produits en Archivé</h1>
+
+
+    @foreach ($products as $product)
+        @if($product->status == 1 || $product->categorie->status == 1)
+
+            <div class="product">
+                <div class="name">{{ $product->nameP }}</div>
+                <div class="name">Stocke : {{ $product->stock }}</div>
+                <form action="{{ route('products.actived',$product->id )}}" method="post">
+                    @csrf
+                    <input class="btn btn-success" type="submit" value="Réactiver">
+                </form>
+            </div>
+        @else
+            @continue
+        @endif
+
+    @endforeach
+
+</div>
+
+
+<!-- Liens vers les fichiers JavaScript de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-
-<?php

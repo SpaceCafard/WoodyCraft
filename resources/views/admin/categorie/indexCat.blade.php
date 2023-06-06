@@ -1,104 +1,146 @@
-<!doctype html>
-<html lang="fr">
+<!DOCTYPE html>
+<html>
 <head>
-    <title>Woody</title>
+    <title>WoodyCraft</title>
+    <!-- Liens vers les fichiers CSS -->
+    <link rel="stylesheet" href="{{ URL::asset('styles.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('formulaire.css') }}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        .product {
+            display: flex;
+            align-items: center;
+            padding: 10px;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .product img {
+            width: 80px;
+            margin-right: 10px;
+        }
+
+        .product .name {
+            flex-grow: 1;
+        }
+
+        .total {
+            font-weight: bold;
+        }
+    </style>
 </head>
-<body class="body">
-<h1>Les Enfants Terribles</h1>
+<body>
+<header>
+    <!-- En-tête du site -->
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <a class="navbar-brand" href="{{ route('admin.home') }}">WoodyCraft Admin</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.home') }}">Accueil</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        Produits
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item" href="{{ route('products.index') }}">Produits en ligne</a>
+                        <a class="dropdown-item" href="{{ route('admin.archive') }}">Produits archivé</a>
 
-<!-- Message Pop Up -->
+                    </div>
+                </li>
+                <li class="nav-item active">
+                    <a class="nav-link" href="{{ route('admin.cat') }}">Catégories</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('order.admin') }}">Commandes</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{{ route('admin.userList') }}">Utilisateur</a>
+                </li>
+                @guest
 
-@if(session()->has('info'))
-    <div>
-        {{ session('info') }}
-    </div>
-@endif
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('login') }}">
+                            Connexion
+                        </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('Senregistrer') }}" >
+                            S'inscrire
+                        </a>
+                    </li>
+
+                @else
+
+                    <li class="nav-item dropdown">
+                        <a class="nav-link" href="{{ route('signout') }}">
+                            Déconnexion
+                        </a>
+                    </li>
+
+            @endguest
 
 
 
-<!-- Fin Message Pop Up -->
+        </div>
+    </nav>
+    @if(session()->has('info'))
+        <div class="alert alert-secondary" role="alert">
+            {{ session('info') }}
+        </div>
+    @endif
 
+</header>
+<div class="container">
+    <h1>Catégorie Active</h1>
+    <a class="btn btn-primary" href="{{ route('admin.createCat') }}">Ajouter une categorie</a>
 
-<!-- Connexion/Inscription -->
-
-@guest
-
-    <a class="nav-link" href="{{ route('login') }}">Login</a>
-    <a class="nav-link" href="{{ route('Senregistrer') }}">Register</a>
-
-@else
-
-    <a class="nav-link" href="{{ route('signout') }}">Logout</a>
-    <a href="{{ route('user.profil') }}">Profile</a>
-
-@endguest
-<!-- Fin Connexion/Inscription -->
-
-<a href="{{ route('admin.createCat') }}">Ajouter une categorie</a>
-
-<!-- Affichage des données -->
-
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Action</th>
-    </tr>
     @foreach ($categories as $categorie)
         @if($categorie->status == 0)
-        <tr>
-            <td>{{ $categorie->name }}</td>
-            <td>{{ $categorie->description }}</td>
-            <td>
-                <a href="{{ route('admin.editCat', $categorie->id) }}">Modifier</a>
+
+            <div class="product">
+                <div class="name">{{ $categorie->name }}</div>
+                <a class="btn btn-warning" href="{{ route('admin.editCat', $categorie->id) }}">Modifier</a><p>ㅤ</p>
                 <form action="{{ route('categorie.destroy',$categorie->id )}}" method="post">
                     @csrf
-                    <input type="submit" value="Supprimer">
+                    <input class="btn btn-danger" type="submit" value="Supprimer">
                 </form>
-            </td>
-            @else
-                @continue
-            @endif
-
-        </tr>
-
+            </div>
+        @else
+            @continue
+        @endif
     @endforeach
-</table><br><br>
 
-<p>Catégorie Archivé</p>
+    <h1>Catégorie Désactivée</h1>
 
-<table>
-    <tr>
-        <th>Nom</th>
-        <th>Description</th>
-        <th>Action</th>
-    </tr>
     @foreach ($categories as $categorie)
         @if($categorie->status == 1)
-            <tr>
-                <td>{{ $categorie->name }}</td>
-                <td>{{ $categorie->description }}</td>
-                <td>
 
-                    <form action="{{ route('categorie.actived',$categorie->id )}}" method="post">
-                        @csrf
-                        <input type="submit" value="Réactiver">
-                    </form>
-                </td>
-                @else
-                    @continue
-                @endif
+            <div class="product">
+                <div class="name">{{ $categorie->name }}</div>
+                <form action="{{ route('categorie.actived',$categorie->id )}}" method="post">
+                    @csrf
+                    <input class="btn btn-success" type="submit" value="Réactiver">
+                </form>
+            </div>
+        @else
+            @continue
+        @endif
 
-            </tr>
+    @endforeach
 
-            @endforeach
-</table>
-<!-- Fin Affichage des données -->
+</div>
 
 
+<!-- Liens vers les fichiers JavaScript de Bootstrap -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
-
-

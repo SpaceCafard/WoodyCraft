@@ -155,11 +155,11 @@ class OrderController extends Controller
     public function listOrderAdmin(){
         if(Auth::id())
         {
-
+            $user=auth()->user();
             $orders = Order::all();
             $customer = Customer::all();
 
-            return view('admin.listOrderAdmin', compact('orders','customer'));
+            return view('admin.listOrderAdmin', compact('orders','customer','user'));
 
         }
         else{
