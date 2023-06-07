@@ -53,7 +53,7 @@ class OrderController extends Controller
                 'add2',
                 'city' => 'required' ,
                 'postcode' => 'required' ,
-                'phone' => 'required|max:10' ,
+                'phone' => 'required' ,
                 'email' => 'required' ,
                 'nameCarte' => 'required' ,
                 'numero' => 'required' ,
