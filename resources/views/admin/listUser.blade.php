@@ -51,7 +51,7 @@
                     </a>
                     <div class="dropdown-menu" aria-labelledby="navbarDropdown">
                         <a class="dropdown-item" href="{{ route('products.index') }}">Produits en ligne</a>
-                        <a class="dropdown-item" href="{{ route('admin.archive') }}">Produits archivé</a>
+                        <a class="dropdown-item" href="{{ route('admin.archive') }}">Produits archivés</a>
 
                     </div>
                 </li>

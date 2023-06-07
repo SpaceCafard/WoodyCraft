@@ -77,7 +77,7 @@
 </header>
 
 <div class="container">
-    <h1>Commande en cours</h1>
+    <h1>Commandes en cours</h1>
     @if($count2 == 0)
         <h5 class="card-title">Vous n'avez aucunes commandes en cours ...</h5>
     @else
@@ -95,7 +95,7 @@
                         <center>
                             <h5 class="card-title">Produit</h5>
                         </center>
-                        
+
                         @foreach($order->commandes as $commande)
                             <p class="card-text">
                                 {{$commande->quantity}} | {{$commande->product->nameP}} {{$commande->product->price}}€<br>

@@ -43,9 +43,8 @@ body {
     align-items: center;
 }
 
-.product-image img {
-    margin-right: 20px;
-    max-width: 60%;
+.product-image img { 
+    max-width: 100%;
     height: auto;
 }
 

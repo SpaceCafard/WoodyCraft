@@ -57,10 +57,14 @@ class IndexController extends Controller
         $categories = $product->categorie->name;
 
         if(Auth::id()) {
+            if (auth()->user()->is_admin == 1) {
+                $user = auth()->user();
+                return view('admin.showAdmin', compact('product','categories','user'));
+            }
             $user = auth()->user();
             $count = Panier::where('name', $user->name)->count();
             $ip = $_SERVER['SERVER_ADDR'];
-            return view('produit.show', compact('product','categories','count','ip'));
+            return view('produit.show', compact('product','categories','count','ip','user'));
         }
         $ip = $_SERVER['SERVER_ADDR'];
         return view('produit.show', compact('product', 'categories','ip'));

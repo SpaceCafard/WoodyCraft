@@ -4,32 +4,11 @@
     <title>WoodyCraft</title>
     <!-- Liens vers les fichiers CSS -->
     <link rel="stylesheet" href="{{ URL::asset('styles.css') }}">
-    <link rel="stylesheet" href="{{ URL::asset('formulaire.css') }}">
+    <link rel="stylesheet" href="{{ URL::asset('description.css') }}">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <meta charset="UTF-8">
-    <style>
-        .product {
-            display: flex;
-            align-items: center;
-            padding: 10px;
-            border-bottom: 1px solid #ddd;
-        }
-
-        .product img {
-            width: 80px;
-            margin-right: 10px;
-        }
-
-        .product .name {
-            flex-grow: 1;
-        }
-
-        .total {
-            font-weight: bold;
-        }
-    </style>
 </head>
 <body>
 <header>
@@ -97,57 +76,37 @@
     @endif
 
 </header>
+<body>
 <div class="container">
-    <!-- Contenu principal du site -->
-
-
-    <center>
-        <form action="{{ route('products.update', $products->id) }}" enctype="multipart/form-data" method="POST" class="form">
-            @method('put')
-            @csrf
-            <span class="signup">Modifier {{ $products->nameP }}</span>
-            <div class="select">
-                <select name="categorie_id">
-                    <option value="{{ $products->categorie_id }}">Actuelle : {{ $products->categorie->name }}</option>
-                    @foreach($categories as $categorie)
-                        @if($categorie->id==$products->categorie_id)
-                            @continue
-                        @endif
-                        <option value="{{ $categorie->id }}">{{ $categorie->name }}</option>
-                    @endforeach
-                </select>
-            </div><br>
-            @if ($errors->has('nameP'))
-                <span class="text-danger">Vous devez entrer un nom pour votre produit</span>
-            @endif
-            <input type="text" placeholder="Nom du Produit" value="{{ old('nameP', $products->nameP) }}" name="nameP" class="form--input">
-            @if ($errors->has('description'))
-                <span class="text-danger">Vous devez entrer une description</span>
-            @endif
-            <textarea placeholder="Description du Produit"  name="description" rows="10" class="form--input"> {{ old('description', $products->description) }} </textarea>
-            @if ($errors->has('price'))
-                <span class="text-danger">Vous devez entrer un prix</span>
-            @endif
-            <input type="text" placeholder="Prix du Produit" value="{{ old('price', $products->price) }}" name="price"  class="form--input">
-            @if ($errors->has('stock'))
-                <span class="text-danger">Vous devez indiquer le stocke disponible</span>
-            @endif
-            <input type="text" placeholder="Stocke Disponible" value="{{ old('stock', $products->stock) }}" name="stock" class="form--input">
-            @if($products->image == null )
-                <img src="{{ URL::to('image/notAvailable.png') }}" class="card-img" alt="{{ $products->nameP }}">
-            @else
-                <img src="{{ URL::to($products->image) }}" class="card-img" alt="{{ $products->nameP }}">
-            @endif
-            <label class="label">Image(Inferieur a 2mo, JPEG OU JPG):</label>
-            <input type="file" name="image"><br>
-
-
-            <input type="submit" value="Mettre à jour" class="form--submit">
-
-
-        </form>
-    </center>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="product-image">
+                @if($product->image == null )
+                    <p><img src={{ URL::to('image/notAvailable.png') }}/></p>
+                @else
+                    <p><img src="{{ URL::to($product->image) }}"/></p>
+                @endif
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="product-details">
+                <h2 class="category">{{ $categories }}</h2>
+                <h5 class="card-title">{{$product->nameP}}</h5>
+                <p class="price">Prix : {{ $product->price }}€</p>
+                <p class="description">{{ $product->description }}</p>
+                <div class="row">
+                    <a class="btn btn-warning" href="{{ route('products.edit', $product->id) }}">Modifier</a><p>ㅤ</p>
+                    <form action="{{ route('products.destroy',$product->id )}}" method="post">
+                        @csrf
+                        <input class="btn btn-danger" type="submit" value="Supprimer">
+                    </form>
+                </div>
+        </div>
+    </div>
 </div>
+</body>
+
+
 
 <!-- Liens vers les fichiers JavaScript de Bootstrap -->
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
@@ -155,3 +114,4 @@
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
 </body>
 </html>
+

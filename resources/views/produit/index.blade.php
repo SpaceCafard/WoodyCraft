@@ -99,11 +99,13 @@
                 @if($product->status == 0)
                     <div class="col-md-4">
                         <div class="card">
-                            @if($product->image == null )
-                                <img src="{{ URL::to('image/notAvailable.png') }}" class="card-img-top" alt="{{ $product->nameP }}">
-                            @else
-                                <img src="{{ URL::to($product->image) }}" class="card-img-top" alt="{{ $product->nameP }}">
-                            @endif
+                            <a href="{{ route('products.show', $product->id) }}">
+                                @if($product->image == null )
+                                    <img src="{{ URL::to('image/notAvailable.png') }}" class="card-img-top" alt="{{ $product->nameP }}">
+                                @else
+                                    <img src="{{ URL::to($product->image) }}" class="card-img-top" alt="{{ $product->nameP }}">
+                                @endif
+                            </a>
 
                             <div class="card-body">
                                 <h5 class="card-title">{{ $product->nameP }}</h5>

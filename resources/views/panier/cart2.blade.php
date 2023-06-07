@@ -146,7 +146,7 @@
                         <h5 class="card-title">Détail du panier</h5>
                         <p class="card-text">
                             Nombre de produit : {{ $nbProd }}<br>
-                            Total : {{ $total }}<br><br>
+                            Total : {{ $total }}€<br><br>
                         </p>
                         <a href="{{ route('order.user') }}" class="btn btn-success">Passer commande</a>
                         <form action="{{route('panier.remove')}}" method="POST">

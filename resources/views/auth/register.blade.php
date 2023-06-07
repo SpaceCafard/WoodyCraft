@@ -93,11 +93,11 @@
             @if ($errors->has('forname'))
                 <span class="text-danger">Vous devez renseigner votre prénom</span>
             @endif
-            <input type="text" placeholder="Prenom" name="forname" class="form--input">
+            <input type="text" placeholder="Prénom" name="forname" class="form--input">
             @if ($errors->has('add1'))
                 <span class="text-danger">Vous devez renseigner votre adresse</span>
             @endif
-            <input type="text" placeholder="Premiére adresse" name="add1" class="form--input">
+            <input type="text" placeholder="Prémiére adresse" name="add1" class="form--input">
             @if ($errors->has('add2'))
                 <span class="text-danger">{{ $errors->first('add2') }}</span>
             @endif
