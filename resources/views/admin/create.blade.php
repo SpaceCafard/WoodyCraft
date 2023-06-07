@@ -132,7 +132,7 @@
             <input type="file" name="image" ><br>
 
 
-            <input type="submit" value="Mettre à jour" class="form--submit">
+            <input type="submit" value="Crée" class="form--submit">
 
 
         </form>

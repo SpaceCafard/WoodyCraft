@@ -34,7 +34,7 @@ class IndexController extends Controller
     public function index($name = null)
     {
         $query = $name ? Categorie::whereName($name)->firstOrFail()->products() : Product::query();
-        $products = $query->oldest('nameP')->paginate(5);
+        $products = $query->oldest('nameP')->paginate(10^99);
         $categories = Categorie::all();
 
         if(Auth::id()) {
