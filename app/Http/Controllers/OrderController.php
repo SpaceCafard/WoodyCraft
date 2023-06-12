@@ -126,7 +126,7 @@ class OrderController extends Controller
             $paniers = Panier::where('name', $user->name);
             $paniers->delete();
 
-            return redirect('/showPanier')->with('info', 'Commande Passer ');
+            return redirect('/showPanier')->with('info', 'Commande Passée ');
         }
         else
         {
